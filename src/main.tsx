@@ -4,7 +4,7 @@ import worklet from "./script/paintWorklet";
 import Btn from "./script/components/btn";
 import BabylonBox from "./script/components/BabylonBox";
 import Attr from "./script/attr";
-import { default as wasm, greet  } from "../public/pkg/kiya_tool.js";
+import { default as wasm, greet } from "../public/pkg/kiya_tool.js";
 
 worklet();//导入自定义paintAPI
 
@@ -52,6 +52,7 @@ function GS(props: propType) {
     // Attr();
     wasm().then((module) => {
       greet('Trump is a pig! lalalal~');
+      // hcl_init();
     });
     return function clear() {
       clearInterval(playTime);
