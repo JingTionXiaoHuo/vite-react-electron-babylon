@@ -93,6 +93,6 @@ dist/
 build/
 
 #rust
-pkg/
-target/
+public/pkg/
+public/target/
 wasm-pack.log
