@@ -1,0 +1,200 @@
+/* 右侧滚动条样式 */
+::-webkit-scrollbar {
+  height: 0;
+  width: 8px;
+  color: transparent;
+}
+
+/* 正常情况下滑块的样式 */
+::-webkit-scrollbar-thumb {
+  background-color: var(--main-color-2);
+  border-radius: var(--border-radius-small);
+}
+
+/* 鼠标悬浮在滑块上时滑块的样式 */
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--main-color-3);
+}
+
+html {
+  font: normal var(--base-font-size) / 1.5 var(--font_family);
+  background-color: transparent;
+}
+
+/* 初始化 */
+a,
+body,
+canvas,
+code,
+div,
+footer,
+form,
+header,
+html,
+i,
+iframe,
+img,
+label,
+li,
+main,
+mark,
+menu,
+nav,
+ol,
+output,
+p,
+pre,
+section,
+small,
+span,
+strong,
+sub,
+ul,
+var {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  vertical-align: baseline;
+}
+
+/* title组件：
+梯度: +3px +2px +0px +2px +4px +4px +4px +8px +12px +16px
+行高 = 字号 + 8px */
+
+/* H1 */
+h1,
+.title {
+  font: bold calc(1rem + 2px + 4px * 3 + 8px + 12px + 16px) / calc(1em + 8px)
+    var(--font_family);
+}
+
+/* H2 */
+h2,
+.content .title {
+  font: bold calc(1rem + 2px + 4px * 3 + 8px + 12px) / calc(1em + 8px)
+    var(--font_family);
+}
+
+/* H3 */
+h3,
+.content .content .title {
+  font: bold calc(1rem + 2px + 4px * 3 + 8px) / calc(1em + 8px)
+    var(--font_family);
+}
+
+/* H4 */
+h4,
+.content .content .content .title {
+  font: bold calc(1rem + 2px + 4px * 3) / calc(1em + 8px) var(--font_family);
+}
+
+/* H5 */
+h5,
+.content .content .content .content .title {
+  font: bold calc(1rem + 2px + 4px * 2) / calc(1em + 8px) var(--font_family);
+}
+
+/* H6 */
+h6,
+.content .content .content .content .content .title {
+  font: bold calc(1rem + 2px + 4px) / calc(1em + 8px) var(--font_family);
+}
+
+/* H7 */
+.content .content .content .content .content .content .title {
+  font: bold calc(1rem + 2px) / calc(1em + 8px) var(--font_family);
+}
+
+/* H8 */
+.content .content .content .content .content .content .content .title {
+  font: bold 1rem / calc(1em + 8px) var(--font_family);
+}
+
+/* H9 */
+.content .content .content .content .content .content .content .content .title {
+  font: bold calc(1rem - 2px) / calc(1em + 8px) var(--font_family);
+}
+
+/* H10 */
+.content
+  .content
+  .content
+  .content
+  .content
+  .content
+  .content
+  .content
+  .content
+  .title {
+  font: bold calc(1rem - 2px - 3px) / calc(1em + 8px) var(--font_family);
+}
+
+/* 非粗体title */
+:is(.title, h1, h2, h3, h4, h5, h6).normal {
+  font-weight: normal;
+}
+
+canvas {
+  touch-action: none;
+}
+
+canvas:focus-visible {
+  outline: none;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  /* filter: drop-shadow(0 0 20px var(--small-shadow-color)); */
+  /* background: rgba(0,0,0,0.2); */
+}
+
+#root {
+  position: relative;
+  width: 80%;
+  height: 80%;
+  margin: auto;
+  /* background-color: var(--white-100); */
+  mask-image: paint(smooth-corners);
+  -webkit-mask-image: paint(smooth-corners);
+  --smooth-corners: 32;
+}
+
+#GS {
+  width: 100%;
+  height: 100%;
+  background: url(/img/page/bg/bg.svg) no-repeat center;
+  display: flex;
+}
+
+#BabylonBox{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+
+.pfs-info{
+  position: absolute;
+  right: 2vw;
+  top: 2vw;
+  font: normal 12px/18px var(--font_family);
+  color: var(--white-30);
+  /* display: none; */
+}
+
+.info {
+  position: absolute;
+  left: 2vw;
+  top: 2vw;
+  font: normal 12px/18px var(--font_family);
+  color: var(--white-30);
+  /* display: none; */
+}
+
+.GS_btn {
+  cursor: pointer;
+  margin: auto;
+  z-index: 2;
+  font-size: 1in;
+}

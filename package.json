@@ -1,0 +1,76 @@
+{
+  "name": "kiya-tool",
+  "productName": "Kiya-Tool",
+  "version": "1.0.0",
+  "description": "A demo",
+  "main": "electron.ts",
+  "homepage": ".",
+  "keywords": [],
+  "author": "Kiya",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "electron-dev": "electron . dev",
+    "electron": "electron .",
+    "dist": "electron-builder --win --x64"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "build": {
+    "productName": "Kiya-Tool v1.0.0",
+    "appId": "com.leon.xxxxx",
+    "copyright": "null",
+    "directories": {
+      "output": "dist"
+    },
+    "asar": false,
+    "nsis": {
+      "oneClick": false,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "public/img/256.ico",
+      "uninstallerIcon": "public/img/256.ico",
+      "installerHeaderIcon": "public/img/256.ico",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Kiya-Tool v1.0",
+      "deleteAppDataOnUninstall": true
+    },
+    "win": {
+      "icon": "public/img/256.ico",
+      "target": [
+        {
+          "target": "nsis"
+        }
+      ]
+    }
+  },
+  "dependencies": {
+    "babylonjs": "^5.8.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "@types/styled-components": "^5.1.25",
+    "@vitejs/plugin-react": "^1.3.0",
+    "electron": "16.0.7",
+    "electron-builder": "^22.14.5",
+    "typescript": "^4.6.3",
+    "vite": "^2.9.5"
+  }
+}
