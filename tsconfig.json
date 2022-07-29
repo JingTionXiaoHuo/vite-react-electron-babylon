@@ -1,21 +1,65 @@
 {
   "compilerOptions": {
+
+    // 指定 ECMAScript 目标版本: 'ES3' (default), 'ES5', 'ES6'/'ES2015', 'ES2016', 'ES2017', or 'ESNEXT'  
     "target": "ESNext",
-    "useDefineForClassFields": true,
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "allowJs": false,
-    "skipLibCheck": true,
-    "esModuleInterop": false,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
+
+    // 指定使用模块: 'commonjs', 'amd', 'system', 'umd' or 'es2015' 
     "module": "ESNext",
+
+    // 指定要包含在编译中的库文件
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+
+    // 允许编译 javascript 文件 
+    "allowJs": false,
+
+    // 报告 javascript 文件中的错误 
+    // "checkJs": true, 
+
+    // 指定 jsx 代码的生成: 'preserve', 'react-native', or 'react'
+    "jsx": "react-jsx",
+
+    // 生成相应的 '.d.ts' 文件  
+    "declaration": true,
+
+    // 有未使用变量时，抛出错误
+    "noUnusedLocals": true,
+
+    // 忽略所有的声明文件（ *.d.ts）的类型检查。
+    "skipLibCheck": true,
+
+    // 支持使用import d from 'cjs'的方式引入commonjs包
+    "esModuleInterop": false,
+
+    // 允许从没有设置默认导出的模块中默认导入。这并不影响代码的输出，仅为了类型检查。
+    "allowSyntheticDefaultImports": true,
+
+    // 启用所有严格类型检查选项。
+    "strict": true,
+
+    // 禁止对同一个文件的不一致的引用。
+    "forceConsistentCasingInFileNames": true,
+
+    // 模块解析策略，ts默认用node的解析策略，即相对的方式导入
     "moduleResolution": "Node",
+
+    // 解析Json模块
     "resolveJsonModule": true,
+
+    // 将每个文件做为单独的模块 （与 'ts.transpileModule' 类似）
     "isolatedModules": false,
+
+    // 不输出文件,即编译后不会生成任何js文件
     "noEmit": true,
-    "jsx": "react-jsx"
+
+    // 将class声明中的字段语义从[Set]变更到[Define]
+    "useDefineForClassFields": true,
   },
   "include": ["src/**/*"],
+  "exclude": [
+    "build/**/*",
+    "dist/**/*",
+    "public/**/*",
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

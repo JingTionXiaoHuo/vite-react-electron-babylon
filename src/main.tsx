@@ -4,7 +4,7 @@ import worklet from "./script/paintWorklet";
 import Btn from "./script/components/btn";
 import BabylonBox from "./script/components/BabylonBox";
 import Attr from "./script/attr";
-import { default as wasm, greet } from "../public/pkg/kiya_tool.js";
+import { default as wasm, hcl_init, greet } from "../public/pkg/kiya_tool.js";
 
 worklet();//导入自定义paintAPI
 
@@ -23,7 +23,7 @@ interface GS {
 function GS(props: propType) {
 
   const [time, settime] = useState(0);
-  const [ui_class, setui_class] = useState("play");
+  const [ui_class, setui_class] = useState("Play");
 
   const playOrHidden = new CustomEvent("playOrHidden", {
     detail: ui_class,
@@ -34,7 +34,8 @@ function GS(props: propType) {
   });
 
   function class_switch() {
-    return ui_class === "play" ? "hidden" : "play";
+    window.dispatchEvent(playOrHidden);
+    return ui_class === "Play" ? "Hidden" : "Play";
   }
 
   useEffect(() => {
@@ -47,13 +48,14 @@ function GS(props: propType) {
 
     // 触发'ReactDomRender',electron的预加载脚本如果正常执行则会打印"监听到ReactDomRender,GS组件加载完毕"
     window.dispatchEvent(reactDomRender);
-    window.dispatchEvent(playOrHidden);
 
-    // Attr();
+    Attr();
+
     wasm().then((module) => {
       greet('Trump is a pig! lalalal~');
-      // hcl_init();
+      hcl_init();
     });
+
     return function clear() {
       clearInterval(playTime);
     };
@@ -72,10 +74,10 @@ function GS(props: propType) {
         已运行&nbsp;:&nbsp;&nbsp;{time}s
         <br />
       </div>
-      {/* <Btn
+      <Btn
         onClick={() => setui_class(class_switch())}
         content={ui_class}
-      /> */}
+      />
     </div>
   );
 }
