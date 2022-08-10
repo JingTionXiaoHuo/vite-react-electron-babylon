@@ -11,7 +11,6 @@ use web_sys::console;
 pub fn hcl_init() -> Result<(), JsValue> {
     let window = web_sys::window().expect("异常：无法访问到windows对象！");
     let document = window.document().expect("异常：window中未发现document对象！");
-
     let canvas = document.get_element_by_id("renderCanvas").expect("异常：无法访问到renderCanvas对象！").dyn_into::<web_sys::HtmlCanvasElement>()?;
 
     let context = canvas
