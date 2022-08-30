@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import worklet from "./script/paintWorklet";
 import Btn from "./script/components/btn";
 import BabylonBox from "./script/components/BabylonBox";
+import Banner from "./script/components/Banner";
 import Attr from "./script/attr";
 import { default as wasm, hcl_init, greet } from "../public/pkg/kiya_tool.js";
 
@@ -33,28 +34,49 @@ function GS(props: propType) {
     detail: "base",
   });
 
+  const resize = new CustomEvent("resize", {
+    detail: "change",
+  });
+
   function class_switch() {
     window.dispatchEvent(playOrHidden);
     return ui_class === "Play" ? "Hidden" : "Play";
   }
 
   useEffect(() => {
-    // 添加定时器记录运行时长
+    const root = document.getElementById('root')!;
+
+    // 记录运行时长
     const playTime = setInterval((): void => {
       settime((prevCount) => {
         return prevCount + 1;
       });
     }, 1000);
 
-    // 触发'ReactDomRender',electron的预加载脚本如果正常执行则会打印"监听到ReactDomRender,GS组件加载完毕"
+    // 告知electron的预加载脚本："GS组件加载完毕"
     window.dispatchEvent(reactDomRender);
 
+    // 感知json内容打印
     Attr();
 
+    // wasm内容执行
     wasm().then((module) => {
       greet('Trump is a pig! lalalal~');
-      hcl_init();
+      // hcl_init();
     });
+
+    // 添加全局监听事件
+    window.addEventListener("keydown", (e: KeyboardEvent) => {
+      if (e.code == "F11") {
+        e.preventDefault();
+        if (!root.classList.contains('fullScreen')) {
+          root.classList.add('fullScreen');
+        } else {
+          root.classList.remove('fullScreen');
+        }
+        window.dispatchEvent(resize);
+      }
+    })
 
     return function clear() {
       clearInterval(playTime);
@@ -62,8 +84,9 @@ function GS(props: propType) {
   }, []);
 
   return (
-    <div id="GS" className={ui_class}>
-      <BabylonBox />
+    <div id="GS" className={'default ' + ui_class}>
+      {/* <BabylonBox /> */}
+      <Banner />
       <div className="info">
         Node.js: <span id="node-version"></span>
         <br />

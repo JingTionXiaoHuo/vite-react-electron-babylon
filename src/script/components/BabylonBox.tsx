@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import * as BABYLON from 'babylonjs';
 import { FloatArray } from 'babylonjs';
 import { PerlinNoise } from "./perlin";
-// import start_addr from "/img/babylonImg/jianbian.jpg"
+import start_addr from "/img/babylonImg/jianbian.jpg"
 
 function BabylonBox() {
 	function isCanvas(obj: HTMLCanvasElement | HTMLElement): obj is HTMLCanvasElement {
@@ -10,12 +10,12 @@ function BabylonBox() {
 	}
 
 	useEffect(() => {
-		const canvas = document.getElementById('renderCanvas')!;
+		const canvas = document.getElementById('babylonCanvas')!;
 
-		function canvasResize(): void {
+		function canvasResize() {
 			if (isCanvas(canvas)) {
-				canvas.width = 0.8 * document.body.clientWidth;
-				canvas.height = 0.8 * document.body.clientHeight;
+				canvas.width = canvas.parentElement!.clientWidth;
+				canvas.height = canvas.parentElement!.clientHeight;
 			}
 		}
 		window.addEventListener("resize", canvasResize);
@@ -35,7 +35,7 @@ function BabylonBox() {
 	}, []);
 
 	function createBabylonScene() {
-		const canvas = document.getElementById("renderCanvas")!; // 得到canvas对象的引用
+		const canvas = document.getElementById("babylonCanvas")!; // 得到canvas对象的引用
 		const start_time = new Date().getTime();
 
 		if (isCanvas(canvas)) {
@@ -73,10 +73,26 @@ function BabylonBox() {
 				light2.position = new BABYLON.Vector3(0, 1, 0)
 
 				// 二十面体---------------------
-				const icosahedron = BABYLON.MeshBuilder.CreateGeodesic("icosahedron1", { m: 2, n: 1, size: 2, updatable: true });
+				const icosahedron = BABYLON.MeshBuilder.CreateGeodesic("icosahedron1", { m: 24, n: 2, size: 2, updatable: true });
 
-				var normalMaterial = new BABYLON.StandardMaterial("normalMat", scene);
-				icosahedron.material = normalMaterial;
+				//默认材质----------------------
+				// var normalMaterial = new BABYLON.StandardMaterial("normalMat", scene);
+				// icosahedron.material = normalMaterial;
+
+				//玻璃材质----------------------
+				var mat0 = new BABYLON.PBRMaterial("mat0", scene);
+				mat0.metallic = 0.0;
+				mat0.roughness = 0.12;
+				mat0.useRoughnessFromMetallicTextureAlpha = false;
+				mat0.useRoughnessFromMetallicTextureGreen = true;
+				mat0.useMetallnessFromMetallicTextureBlue = true;
+				mat0.subSurface.isRefractionEnabled = true;
+				mat0.subSurface.maximumThickness = 2.0;
+				mat0.subSurface.tintColor = new BABYLON.Color3(1, 1, 0.941).toLinearSpace();
+				mat0.subSurface.refractionIntensity = 1.0;
+				mat0.subSurface.indexOfRefraction = 2.42;
+				mat0.subSurface.isTranslucencyEnabled = true;
+				icosahedron.material = mat0;
 
 				// //阴影---------------------
 				const generator = new BABYLON.ShadowGenerator(512, light1);
@@ -146,7 +162,7 @@ function BabylonBox() {
 
 	return (
 		<div id='BabylonBox'>
-			<canvas id='renderCanvas'>
+			<canvas id='babylonCanvas'>
 				Your browser does not support the canvas element.
 			</canvas>
 			<div className="pfs-info">FPS: <span id="FPS"></span></div>
