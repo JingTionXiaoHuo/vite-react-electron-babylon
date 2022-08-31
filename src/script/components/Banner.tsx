@@ -75,31 +75,44 @@ function BannerBox() {
 						mainLight.direction = new BABYLON.Vector3(0, -10, 0);
 						mainLight.intensity = 4;
 						mainLight.radius = 10;
-						// mainLight.excludedMeshes = [scene.meshes[1]];
+						// mainLight.falloffType = BABYLON.Light.FALLOFF_PHYSICAL;
 
 						// 正面光
-						const positiveLight = new BABYLON.DirectionalLight("positiveLight", new BABYLON.Vector3(0, 0, 0), scene);
-						positiveLight.position = new BABYLON.Vector3(0, 0, -1)
+						const positiveLight = new BABYLON.DirectionalLight("positiveLight", new BABYLON.Vector3(0, 0, 15), scene);
 						positiveLight.direction = new BABYLON.Vector3(0, 0, -10);
 						positiveLight.intensity = 2;
 						positiveLight.radius = 10;
 
 						// 公路色彩增强光
-						const highwayLight1 = new BABYLON.DirectionalLight("highwayLight1", new BABYLON.Vector3(0, -1, 0), scene);
-						highwayLight1.diffuse = new BABYLON.Color3(3, 0, 255);
-						highwayLight1.position = new BABYLON.Vector3(0, 10, 0);
-						highwayLight1.direction = new BABYLON.Vector3(0, -10, 0);
-						highwayLight1.intensity = 0.1;
-						highwayLight1.radius = 10;
-						highwayLight1.includedOnlyMeshes = [scene.meshes[3],scene.meshes[5]];
+						
+						// 公路色相偏移
+						const highwayLight01 = new BABYLON.DirectionalLight("highwayLight01", new BABYLON.Vector3(0, 10, 0), scene);
+						highwayLight01.includedOnlyMeshes = [scene.meshes[3]];
+						highwayLight01.diffuse = new BABYLON.Color3(3, 0, 255);
+						highwayLight01.direction = new BABYLON.Vector3(0, -10, 0);
+						highwayLight01.intensity = 1;
+						highwayLight01.radius = 10;
 
-						const highwayLight2 = new BABYLON.DirectionalLight("highwayLight2", new BABYLON.Vector3(0, -1, 0), scene);
-						highwayLight2.diffuse = new BABYLON.Color3(255, 240, 250);
-						highwayLight2.position = new BABYLON.Vector3(0, 0, -1)
-						highwayLight2.direction = new BABYLON.Vector3(0, 0, -10);
-						highwayLight2.intensity = 0.02;
-						highwayLight2.radius = 10;
-						highwayLight2.includedOnlyMeshes = [scene.meshes[3]];
+						// 黄线饱和度提高
+						const highwayLight1 = new BABYLON.DirectionalLight("highwayLight1", new BABYLON.Vector3(0, 10, 0), scene);
+						highwayLight1.includedOnlyMeshes = [scene.meshes[4]];
+						highwayLight1.diffuse = new BABYLON.Color3(0, 255, 255);
+						highwayLight1.direction = new BABYLON.Vector3(0, -10, 0);
+						highwayLight1.intensity = 0.01;
+						highwayLight1.radius = 10;
+
+						// 正面红色
+						const highwayLight2 = new BABYLON.PointLight("highwayLight2", new BABYLON.Vector3(0, 1, 16), scene);
+						highwayLight2.includedOnlyMeshes = [scene.meshes[3],scene.meshes[4],scene.meshes[5]];
+						highwayLight2.diffuse = new BABYLON.Color3(255, 0, 0);
+						highwayLight2.intensity = 0.8;
+						
+						const highwayLight3 = new BABYLON.DirectionalLight("highwayLight3", new BABYLON.Vector3(0, 1, 32), scene);
+						highwayLight3.includedOnlyMeshes = [scene.meshes[3],scene.meshes[5]];
+						highwayLight3.diffuse = new BABYLON.Color3(0, 255, 0);
+						highwayLight3.direction = new BABYLON.Vector3(0, 0, -10);
+						highwayLight3.intensity = 10;
+						// highwayLight3.radius = 10;
 
 						//阴影发生器---------------------
 						const generator = new BABYLON.ShadowGenerator(4096, mainLight);
