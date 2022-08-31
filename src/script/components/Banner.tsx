@@ -52,6 +52,7 @@ function BannerBox() {
 				camera.attachControl(canvas, true);
 				camera.minZ = 0.1;
 				camera.fov = 0.26;
+				var postProcess = new BABYLON.FxaaPostProcess("fxaa", 4, camera);
 
 				BABYLON.SceneLoader.AppendAsync("/model/", "banner.gltf", scene,
 					function (event) {
