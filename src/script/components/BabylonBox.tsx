@@ -33,6 +33,7 @@ function BabylonBox() {
 
 		window.addEventListener("playOrHidden", playOrHidden as EventListener)
 	}, []);
+	
 
 	function createBabylonScene() {
 		const canvas = document.getElementById("babylonCanvas")!; // 得到canvas对象的引用

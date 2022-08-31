@@ -39,12 +39,13 @@ function GS(props: propType) {
   });
 
   function class_switch() {
-    window.dispatchEvent(playOrHidden);
     return ui_class === "Play" ? "Hidden" : "Play";
   }
 
   useEffect(() => {
     const root = document.getElementById('root')!;
+    
+    window.dispatchEvent(playOrHidden);
 
     // 记录运行时长
     const playTime = setInterval((): void => {
