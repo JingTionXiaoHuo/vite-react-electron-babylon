@@ -192,6 +192,7 @@ body {
 
 #top_nav img{
   display: block;
+  opacity: 0;
 }
 
 #banner_area{
