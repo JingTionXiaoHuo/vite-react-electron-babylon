@@ -2,21 +2,22 @@ import { useEffect } from 'react';
 import * as BABYLON from 'babylonjs';
 import 'babylonjs-loaders';
 import { MeshWriter } from "meshwriter";
+import { PerlinNoise } from "./perlin";
 
 const imgSize = [[1920, 650], [660, 330], [1110, 450]];
 const imgName = ['woniuxy.cn.pc', 'woniuxy.cn.mo', 'woniuxy.com.pc'];
 const campus_array = [
-	['成都', '9-22'],
+	['成都', '09-22'],
 	['天府', '10-10'],
-	['重庆', '9-19'],
-	['西安', '9-19'],
-	['上海', '9-26'],
-	['武汉', '9-21'],
+	['重庆', '09-19'],
+	['西安', '09-19'],
+	['上海', '09-26'],
+	['武汉', '09-21'],
 	['深圳', '10-10'],
 	['南京', '10-24'],
 	['杭州', '10-18'],
-	['阿多比', '9-26'],
-	['凡云', '9-28']
+	['阿多比', '09-26'],
+	['凡云', '09-28']
 ];
 
 // 按时间顺序对校区数组重排
@@ -63,6 +64,7 @@ function BannerBox() {
 	function createBabylonScene() {
 		const canvas = document.getElementById("BannerCanvas")!; // 得到canvas对象的引用
 		const start_time = new Date().getTime();
+		let perlinNosie = new PerlinNoise();
 
 		if (isCanvas(canvas)) {
 			const engine = new BABYLON.Engine(canvas, true); // 初始化 BABYLON 3D engine
@@ -98,16 +100,14 @@ function BannerBox() {
 						for (let i = 0; i < scene.meshes.length; i++) {
 							if (scene.meshes[i].name === "水滴") {
 								shuidi = scene.meshes[i];
+								shuidi.position._y = 10;
 							}
 						}
-						shuidi.rotationQuaternion = null;//旋转四元数初始化
-						shuidi.rotation = new BABYLON.Vector3(0, 0, 0);
-						shuidi.scaling = new BABYLON.Vector3(1, 1, 1);
 
-						const shuidi_index = 103;//水滴的正面面序号
-						const text_index = 103;//文字的正面面序号
-						const is_line_display = false;//水滴正面法线是否渲染
-						const shuidi_array = [shuidi];
+						// const shuidi_index = 103;//水滴的正面面序号
+						// const text_index = 103;//文字的正面面序号
+						// const is_line_display = true;//水滴正面法线是否渲染
+						const shuidi_array = [];
 						const shuidi_position_array = [
 							[-0.750, -0.360, -0.080, +0.400, +0.770, +1.300, +1.860, +2.370, +2.870, 10, 11, 12, 13],
 							[+0.700, +0.730, +1.020, +1.150, +1.250, +1.270, +1.400, +1.440, +1.600, 10, 11, 12, 13],
@@ -115,34 +115,30 @@ function BannerBox() {
 						];
 						const shuidi_rotation_array = [
 							[+1.950, +1.900, +0.001, +1.980, +0.001, +1.900, +1.980, +0.001, +0.001, 10, 11, 12, 13],
-							[+0.150, +1.900, +1.900, +1.680, +0.100, +1.800, +0.001, +1.100, +1.800, 10, 11, 12, 13],
+							[+0.150, +1.900, +1.900, +1.680, +0.100, +1.800, +0.001, +0.110, +1.800, 10, 11, 12, 13],
 							[+0.001, +1.970, +1.970, +0.001, +1.980, +1.870, +0.001, +0.001, +0.001, 10, 11, 12, 13]
 						]
 						const shuidi_scale_array = [
-							+0.816, +0.735, +0.816, +0.816, +0.792, +0.816, +0.716, +0.701, +0.670, 10, 11, 12, 13
+							[+0.816, +0.735, +0.816, +0.816, +0.792, +0.816, +0.716, +0.701, +0.670, 10, 11, 12, 13],
+							[+0.816, +0.735, +0.816, +0.816, +0.792, +0.816, +0.716, +0.701, +0.670, 10, 11, 12, 13],
+							[+0.816, +0.735, +0.816, +0.816, +0.792, +0.816, +0.716, +0.701, +0.670, 10, 11, 12, 13]
 						]
 						for (let a = 0; a < campus_array.length; a++) {
 
 							const shuidi_position = new BABYLON.Vector3(shuidi_position_array[0][a], shuidi_position_array[1][a], shuidi_position_array[2][a]);
 							const shuidi_rotation = new BABYLON.Vector3(Math.PI * shuidi_rotation_array[0][a], Math.PI * shuidi_rotation_array[1][a], Math.PI * shuidi_rotation_array[2][a]);
-							const shuidi_scaling = new BABYLON.Vector3(shuidi_scale_array[a], shuidi_scale_array[a], shuidi_scale_array[a]);
+							const shuidi_scaling = new BABYLON.Vector3(shuidi_scale_array[0][a], shuidi_scale_array[1][a], shuidi_scale_array[2][a]);
 
 							//创建水滴
-							if (a === 0) {
-								shuidi.name = 'shuidi' + a;
-							} else {
-								const shuidi_clone = shuidi.clone('shuidi' + a, null, false)!;
-								shuidi_array.push(shuidi_clone!);
-							}
+							const shuidi_clone = shuidi.clone('shuidi', null, false)!;
+							shuidi_array.push(shuidi_clone);
+							shuidi_array[a].id = 'shuidi' + a;
 
 							//水滴位置、旋转、缩放效果应用
+							shuidi_array[a].rotationQuaternion = null;//旋转四元数初始化
+							shuidi_array[a].rotation = new BABYLON.Vector3(0, 0, 0);
 							shuidi_array[a].position = shuidi_position;
-							shuidi_array[a].scaling = new BABYLON.Vector3(1, 1, 1);
-							const localAxes_shuidi = new BABYLON.AxesViewer(scene, 0.25);
-							localAxes_shuidi.xAxis.parent = shuidi_array[a];
-							localAxes_shuidi.yAxis.parent = shuidi_array[a];
-							localAxes_shuidi.zAxis.parent = shuidi_array[a];
-							// shuidi_array[a].scaling = shuidi_scaling;
+							shuidi_array[a].scaling = shuidi_scaling;
 
 							//水滴正面文字创建
 							const Writer = MeshWriter(scene, { scale: shuidi_scaling });
@@ -150,94 +146,89 @@ function BannerBox() {
 								"font-family": "PangMenZhengDao",
 								"letter-height": 0.2,
 								"letter-thickness": 0.05,
-								color: "#1C3870",
+								color: "#000000",
 								anchor: "left",
 								colors: {
 									diffuse: "#fd500b",
-									specular: "#000000",
-									ambient: "#01f8cf",
-									emissive: "#ff2600",
+									specular: "#fbff13",
+									ambient: "#f5c5ff",
+									emissive: "#cc4646",
 								},
 								position: shuidi_position.multiply(new BABYLON.Vector3(-1, 1, 1)),
-								// position: shuidi_position.multiply(new BABYLON.Vector3(-1, 1, 1).add(new BABYLON.Vector3(0, 0, 0.01))),
 							});
 							const text_mesh = textMesh.getMesh();
-							const localAxes_text = new BABYLON.AxesViewer(scene, 0.25);
-							localAxes_text.xAxis.parent = text_mesh;
-							localAxes_text.yAxis.parent = text_mesh;
-							localAxes_text.zAxis.parent = text_mesh;
-
-							//水滴正面法向量示意线条创建
-							shuidi_array[a].updateFacetData();
-							const shuidi_mesh_positions = shuidi_array[a].getFacetLocalPositions();
-							const shuidi_mesh_normals = shuidi_array[a].getFacetLocalNormals();
-							const shuidi_mesh_points = [shuidi_mesh_positions[shuidi_index], shuidi_mesh_positions[shuidi_index].add(shuidi_mesh_normals[shuidi_index])];
-							const shuidi_mesh_lines = [];
-							shuidi_mesh_lines.push(shuidi_mesh_points);
-
-							const shuidi_mesh_lineSystem = BABYLON.MeshBuilder.CreateLineSystem("shuidi_mesh_line", { lines: shuidi_mesh_lines }, scene);
-							shuidi_mesh_lineSystem.id = "shuidi_mesh_line" + a;
-							shuidi_mesh_lineSystem.color = BABYLON.Color3.Green();
-							shuidi_mesh_lineSystem.isVisible = is_line_display;
-
-							// 文字正面法向量示意线条创建
-							text_mesh.updateFacetData();
-							const text_mesh_positions = text_mesh.getFacetLocalPositions();
-							const text_mesh_normals = text_mesh.getFacetLocalNormals();
-							const text_mesh_points = [text_mesh_positions[text_index], text_mesh_positions[text_index].add(text_mesh_normals[text_index])];
-							const text_mesh_lines = [];
-							text_mesh_lines.push(text_mesh_points);
-
-							const text_mesh_lineSystem = BABYLON.MeshBuilder.CreateLineSystem("text_mesh_line", { lines: text_mesh_lines }, scene);
-							text_mesh_lineSystem.id = "text_mesh_line" + a;
-							text_mesh_lineSystem.color = BABYLON.Color3.Blue();
-							text_mesh_lineSystem.isVisible = is_line_display;
-
-							//依据水滴法向量方向设置平行光补足水滴正面亮度，以及产生文字阴影
-							const shuidi_light = new BABYLON.DirectionalLight("shuidi_light", new BABYLON.Vector3(0, -1, 0), scene);
-							shuidi_light.id = "shuidi_light" + a;
-							shuidi_light.includedOnlyMeshes = [shuidi_array[a], text_mesh];
-							shuidi_light.intensity = 4;
-							shuidi_light.radius = 10;
-
-							//阴影发生器---------------------
-							if (a == 0) {
-								const generator = new BABYLON.ShadowGenerator(4096, shuidi_light);
-								generator.usePoissonSampling = true;
-								generator.bias = 0.00001;
-								generator.blurScale = 2;
-								generator.transparencyShadow = true;
-								generator.darkness = 0;
-								// 给水滴网格添加阴影发射器并接受阴影
-								generator.addShadowCaster(text_mesh, true);
-							}
-
-							shuidi_mesh_lineSystem.position = shuidi_position.multiply(new BABYLON.Vector3(-1, 1, 1));
-							shuidi_mesh_lineSystem.rotation = shuidi_array[a].rotation.multiply(new BABYLON.Vector3(1, -1, -1));
-							shuidi_mesh_lineSystem.scaling = shuidi_scaling;
-
-							text_mesh_lineSystem.position = text_mesh.position;
-							text_mesh_lineSystem.rotation = text_mesh.rotation.multiply(new BABYLON.Vector3(1, -1, -1));
-							text_mesh_lineSystem.scaling = text_mesh.scaling;
+							text_mesh.name = 'text_mesh';
+							text_mesh.id = 'text_mesh' + a;
 
 							text_mesh.addRotation(Math.PI * 3 / 2, Math.PI * 2 / 2, Math.PI * 0 / 2);
 
-							// shuidi_array[a].addRotation(shuidi_rotation._x, shuidi_rotation._y, shuidi_rotation._z);
-							// shuidi_mesh_lineSystem.addRotation(shuidi_rotation._x, -shuidi_rotation._y, -shuidi_rotation._z);
-							// text_mesh.addRotation(-shuidi_rotation._x, -shuidi_rotation._z, -shuidi_rotation._y);
-							// text_mesh_lineSystem.addRotation(-shuidi_rotation._x, -shuidi_rotation._z, -shuidi_rotation._y);
+							shuidi_array[a].addRotation(shuidi_rotation._x, shuidi_rotation._y, shuidi_rotation._z);
+							text_mesh.addRotation(0, 0, -shuidi_rotation._y);
+							text_mesh.addRotation(-shuidi_rotation._x, 0, 0);
+							text_mesh.addRotation(0, -shuidi_rotation._z, 0);
 
-							const test_vector3 = {
-								_x:Math.PI * 1 / 72,
-								_y:Math.PI * 2 / 72,
-								_z:Math.PI * 3 / 72
-							}
+							//文字居中处理
+							const sizes = text_mesh.getHierarchyBoundingVectors();
+							const width = sizes.max.x - sizes.min.x;
+							text_mesh.locallyTranslate(new BABYLON.Vector3(- width / 2, -0, 0));
+							text_mesh.locallyTranslate(new BABYLON.Vector3(0, 1, 0));
+							const text_mesh_temp_position = text_mesh.position;//用于灯光定位
+							text_mesh.locallyTranslate(new BABYLON.Vector3(0, -0.8, -0.07));
 							setInterval(() => {
-								shuidi_array[a].addRotation(test_vector3['_x'],test_vector3['_y'],test_vector3['_z']);
-								// shuidi_mesh_lineSystem.addRotation(test_vector3['_x'],-test_vector3['_y'],-test_vector3['_z']);
-								text_mesh.addRotation(-test_vector3['_x'],-test_vector3['_z'],-test_vector3['_y']);
-								// text_mesh_lineSystem.addRotation(-test_vector3['_x'],-test_vector3['_z'],-test_vector3['_y']);
-							},1200);
+								const a = new Date().getTime() - start_time;
+								const perlin = perlinNosie.noise(//perlin值只与当前循环操作的顶点的位置信息相关
+									(text_mesh.position.x * 0.3) + (a * 0.0002),
+									(text_mesh.position.y * 0.3) + (a * 0.0003),
+									(text_mesh.position.z * 0.3)
+								);
+								text_mesh.locallyTranslate(new BABYLON.Vector3(0, 0.001 * (perlin - 0.5), 0));
+							}, 25)
+
+							//水滴正面法向量示意线条创建
+							// shuidi_array[a].updateFacetData();
+							// const shuidi_mesh_positions = shuidi_array[a].getFacetLocalPositions();
+							// const shuidi_mesh_normals = shuidi_array[a].getFacetLocalNormals();
+							// const shuidi_mesh_points = [shuidi_mesh_positions[shuidi_index], shuidi_mesh_positions[shuidi_index].add(shuidi_mesh_normals[shuidi_index])];
+							// const shuidi_mesh_lines = [];
+							// shuidi_mesh_lines.push(shuidi_mesh_points);
+
+							// const shuidi_mesh_lineSystem = BABYLON.MeshBuilder.CreateLineSystem("shuidi_mesh_line", { lines: shuidi_mesh_lines }, scene);
+							// shuidi_mesh_lineSystem.id = "shuidi_mesh_line" + a;
+							// shuidi_mesh_lineSystem.color = BABYLON.Color3.Green();
+							// shuidi_mesh_lineSystem.isVisible = is_line_display;
+
+							// shuidi_mesh_lineSystem.position = shuidi_position.multiply(new BABYLON.Vector3(-1, 1, 1));
+							// shuidi_mesh_lineSystem.rotation = shuidi_array[a].rotation.multiply(new BABYLON.Vector3(1, -1, -1));
+							// shuidi_mesh_lineSystem.scaling = shuidi_scaling;
+
+							//依据水滴法向量方向设置平行光补足水滴正面亮度，以及产生文字阴影
+							const shuidi_light = new BABYLON.PointLight("shuidi_light", text_mesh_temp_position, scene);
+							shuidi_light.id = "shuidi_light" + a;
+							shuidi_light.includedOnlyMeshes = [shuidi_array[a], text_mesh];
+							shuidi_light.diffuse = new BABYLON.Color3(0.8, 0.84, 0.9);
+							shuidi_light.intensity = 3;
+							shuidi_light.radius = 10;
+
+							// //局部坐标系显示
+							// const localAxes_shuidi = new BABYLON.AxesViewer(scene, 0.25);
+							// localAxes_shuidi.xAxis.parent = shuidi_array[a];
+							// localAxes_shuidi.yAxis.parent = shuidi_array[a];
+							// localAxes_shuidi.zAxis.parent = shuidi_array[a];
+
+							// const localAxes_text = new BABYLON.AxesViewer(scene, 0.25);
+							// localAxes_text.xAxis.parent = text_mesh;
+							// localAxes_text.yAxis.parent = text_mesh;
+							// localAxes_text.zAxis.parent = text_mesh;
+
+							//阴影发生器---------------------
+							const generator = new BABYLON.ShadowGenerator(1024, shuidi_light);
+							// generator.usePoissonSampling = true;
+							generator.bias = 0.00001;
+							generator.blurScale = 2;
+							generator.transparencyShadow = true;
+							generator.darkness = 0;
+
+							generator.addShadowCaster(text_mesh, true);
 						}
 
 						// 主光源
@@ -249,6 +240,7 @@ function BannerBox() {
 
 						// 正面光
 						const positiveLight = new BABYLON.DirectionalLight("positiveLight", new BABYLON.Vector3(0, 0, -10), scene);
+						positiveLight.includedOnlyMeshes = [scene.meshes[1], scene.meshes[2], scene.meshes[3], scene.meshes[4], scene.meshes[5]];
 						positiveLight.intensity = 2;
 						positiveLight.radius = 10;
 
@@ -280,6 +272,14 @@ function BannerBox() {
 						highwayLight3.intensity = 10;
 						// highwayLight3.radius = 10;
 
+						// 水滴环境色补足
+						const shuidiLight = new BABYLON.HemisphericLight("shuidiLight", new BABYLON.Vector3(0, -10, 0), scene);
+						shuidiLight.includedOnlyMeshes = shuidi_array;
+						// shuidiLight.diffuse = new BABYLON.Color3(0.99, 0.7, 0.97);
+						shuidiLight.diffuse = new BABYLON.Color3(0.8, 0.7, 0.97);
+						shuidiLight.intensity = 2;
+
+
 						//阴影发生器---------------------
 						const generator = new BABYLON.ShadowGenerator(4096, mainLight);
 						generator.usePoissonSampling = true;
@@ -288,9 +288,13 @@ function BannerBox() {
 						generator.transparencyShadow = true;
 						generator.darkness = 0.5;
 
-						for (var i = 0; i < scene.meshes.length; i++) {
+						// for (let i = 0; i < scene.lights.length; i++) {
+						// 	console.log(i, scene.lights[i].name, scene.lights[i]);
+						// }
 
-							console.log(i, scene.meshes[i].name, scene.meshes[i]);
+						for (let i = 0; i < scene.meshes.length; i++) {
+
+							// console.log(i, scene.meshes[i].name, scene.meshes[i]);
 
 							// 给所有网格添加阴影发射器并接受阴影
 							generator.addShadowCaster(scene.meshes[i], true);
