@@ -7,23 +7,23 @@ import { PerlinNoise } from "./perlin";
 const imgSize = [[1920, 650], [660, 330], [1110, 450]];
 const imgName = ['woniuxy.cn.pc', 'woniuxy.cn.mo', 'woniuxy.com.pc'];
 const campus_array = [
-	['成都', '09-22'],
-	['天府', '10-10'],
-	['重庆', '09-19'],
-	['西安', '09-19'],
-	['上海', '09-26'],
-	['武汉', '09-21'],
-	['深圳', '10-10'],
-	['南京', '10-24'],
-	['杭州', '10-18'],
-	['阿多比', '09-26'],
-	['凡云', '09-28']
+	['成都', '09·22'],
+	['天府', '10·10'],
+	['重庆', '09·19'],
+	['西安', '09·19'],
+	['上海', '09·26'],
+	['武汉', '09·21'],
+	['深圳', '10·10'],
+	['南京', '10·24'],
+	['杭州', '10·18'],
+	['阿多比', '09·26'],
+	['凡云', '09·28']
 ];
 
 // 按时间顺序对校区数组重排
 for (let i = 0; i < campus_array.length - 1; i++) {
 	for (let j = 0; j < campus_array.length - 1 - i; j++) {
-		if (campus_array[j][1] < campus_array[j + 1][1]) {
+		if (campus_array[j][1] > campus_array[j + 1][1]) {
 			let temp_array = campus_array[j];
 			campus_array[j] = campus_array[j + 1];
 			campus_array[j + 1] = temp_array;
@@ -141,24 +141,27 @@ function BannerBox() {
 							shuidi_array[a].scaling = shuidi_scaling;
 
 							//水滴正面文字创建
+							const time_array = campus_array[a][1].replace(" ", ":").replace(/:/g, "·").split("·");//正则拆分时间
+							time_array[0].replace(/\b(0+)/gi, "");//正则去掉前面的0
 							const Writer = MeshWriter(scene, { scale: shuidi_scaling });
-							const textMesh = new Writer(campus_array[a][1], {
+							const textMesh = new Writer(time_array[1], {
 								"font-family": "PangMenZhengDao",
 								"letter-height": 0.2,
 								"letter-thickness": 0.05,
-								color: "#000000",
+								color: "#fd500b",
 								anchor: "left",
 								colors: {
 									diffuse: "#fd500b",
-									specular: "#fbff13",
-									ambient: "#f5c5ff",
-									emissive: "#cc4646",
+									specular: "#000000",
+									ambient: "#fd500b",
+									emissive: "#fd500b",
 								},
 								position: shuidi_position.multiply(new BABYLON.Vector3(-1, 1, 1)),
 							});
 							const text_mesh = textMesh.getMesh();
 							text_mesh.name = 'text_mesh';
 							text_mesh.id = 'text_mesh' + a;
+							console.log(text_mesh.material)
 
 							text_mesh.addRotation(Math.PI * 3 / 2, Math.PI * 2 / 2, Math.PI * 0 / 2);
 
@@ -171,18 +174,20 @@ function BannerBox() {
 							const sizes = text_mesh.getHierarchyBoundingVectors();
 							const width = sizes.max.x - sizes.min.x;
 							text_mesh.locallyTranslate(new BABYLON.Vector3(- width / 2, -0, 0));
-							text_mesh.locallyTranslate(new BABYLON.Vector3(0, 1, 0));
+							text_mesh.locallyTranslate(new BABYLON.Vector3(0.5, 1, 0.3));
 							const text_mesh_temp_position = text_mesh.position;//用于灯光定位
-							text_mesh.locallyTranslate(new BABYLON.Vector3(0, -0.8, -0.07));
-							setInterval(() => {
-								const a = new Date().getTime() - start_time;
-								const perlin = perlinNosie.noise(//perlin值只与当前循环操作的顶点的位置信息相关
-									(text_mesh.position.x * 0.3) + (a * 0.0002),
-									(text_mesh.position.y * 0.3) + (a * 0.0003),
-									(text_mesh.position.z * 0.3)
-								);
-								text_mesh.locallyTranslate(new BABYLON.Vector3(0, 0.001 * (perlin - 0.5), 0));
-							}, 25)
+							text_mesh.locallyTranslate(new BABYLON.Vector3(-0.5, -0.93, -0.37));
+
+							// 测试阴影消失距离的柏林噪声
+							// setInterval(() => {
+							// 	const a = new Date().getTime() - start_time;
+							// 	const perlin = perlinNosie.noise(//perlin值只与当前循环操作的顶点的位置信息相关
+							// 		(text_mesh.position.x * 0.3) + (a * 0.0002),
+							// 		(text_mesh.position.y * 0.3) + (a * 0.0003),
+							// 		(text_mesh.position.z * 0.3)
+							// 	);
+							// 	text_mesh.locallyTranslate(new BABYLON.Vector3(0, 0.001 * (perlin - 0.5), 0));
+							// }, 25)
 
 							//水滴正面法向量示意线条创建
 							// shuidi_array[a].updateFacetData();
@@ -201,7 +206,7 @@ function BannerBox() {
 							// shuidi_mesh_lineSystem.rotation = shuidi_array[a].rotation.multiply(new BABYLON.Vector3(1, -1, -1));
 							// shuidi_mesh_lineSystem.scaling = shuidi_scaling;
 
-							//依据水滴法向量方向设置平行光补足水滴正面亮度，以及产生文字阴影
+							//依据水滴法向量方向设置点光补足水滴正面亮度，以及产生文字阴影
 							const shuidi_light = new BABYLON.PointLight("shuidi_light", text_mesh_temp_position, scene);
 							shuidi_light.id = "shuidi_light" + a;
 							shuidi_light.includedOnlyMeshes = [shuidi_array[a], text_mesh];
@@ -221,14 +226,14 @@ function BannerBox() {
 							// localAxes_text.zAxis.parent = text_mesh;
 
 							//阴影发生器---------------------
-							const generator = new BABYLON.ShadowGenerator(1024, shuidi_light);
-							// generator.usePoissonSampling = true;
-							generator.bias = 0.00001;
-							generator.blurScale = 2;
-							generator.transparencyShadow = true;
-							generator.darkness = 0;
+							const shuidi_generator = new BABYLON.ShadowGenerator(1024, shuidi_light);
+							shuidi_generator.usePoissonSampling = true;
+							shuidi_generator.bias = 0.000001;
+							shuidi_generator.blurScale = 1;
+							shuidi_generator.transparencyShadow = true;
+							shuidi_generator.darkness = 0.2;
 
-							generator.addShadowCaster(text_mesh, true);
+							shuidi_generator.addShadowCaster(text_mesh, true);
 						}
 
 						// 主光源
