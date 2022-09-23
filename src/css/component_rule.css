@@ -161,7 +161,7 @@ body {
   --smooth-corners: 64;
 }
 
-#root{
+#root.fullScreen{
   width: 100%;
   height: 100%;
   mask-image:unset;
@@ -192,7 +192,7 @@ body {
 
 #top_nav img{
   display: block;
-  opacity: 0;
+  opacity: 1;
 }
 
 #banner_area{

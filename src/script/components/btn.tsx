@@ -16,8 +16,8 @@ interface Menu {
 class Menu extends React.Component {
   render() {
     return (
-      <div className="GS_btn">
-        <div onClick={this.props.onClick}>{this.props.content}</div>
+      <div className="GS_btn" onClick={this.props.onClick}>
+        {this.props.content}
       </div>
     );
   }

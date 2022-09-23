@@ -39,13 +39,18 @@ function GS(props: propType) {
   });
 
   function class_switch() {
+    if (ui_class === "Play") {
+      window.dispatchEvent(playOrHidden);
+    }
     return ui_class === "Play" ? "Hidden" : "Play";
   }
 
   useEffect(() => {
     const root = document.getElementById('root')!;
-    
-    window.dispatchEvent(playOrHidden);
+
+    if (document.getElementById('BannerBox')) {
+      root.classList.add('fullScreen');
+    }
 
     // 记录运行时长
     const playTime = setInterval((): void => {

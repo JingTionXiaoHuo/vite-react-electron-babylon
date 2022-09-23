@@ -49,13 +49,13 @@ function BannerBox() {
 
 		// 初始化canvas标签大小
 		canvasResize();
-		//绘制canvas内容
-		createBabylonScene();
 
 		function playOrHidden(event: CustomEvent) {
 			if (event.detail === 'Play') {
 				window.removeEventListener("playOrHidden", playOrHidden as EventListener)
 			}
+			//绘制canvas内容
+			createBabylonScene();
 		}
 
 		window.addEventListener("playOrHidden", playOrHidden as EventListener)
@@ -68,6 +68,31 @@ function BannerBox() {
 
 		if (isCanvas(canvas)) {
 			const engine = new BABYLON.Engine(canvas, true); // 初始化 BABYLON 3D engine
+
+			interface ILoadingScreen {
+				//What happens when loading starts
+				displayLoadingUI: () => void;
+				//What happens when loading stops
+				hideLoadingUI: () => void;
+				//default loader support. Optional!
+				loadingUIBackgroundColor: string;
+				loadingUIText: string;
+			}
+			
+			//自定义加载动画
+			function customLoadingScreen():ILoadingScreen  {
+				return {
+					displayLoadingUI: () => {
+						
+					},
+					hideLoadingUI: () => {
+						
+					},
+					loadingUIBackgroundColor: '#ffffff',
+					loadingUIText: 'Loading...',
+				};
+			};
+			engine.loadingScreen = customLoadingScreen();
 
 			/******* 定义场景函数 ******/
 			let createScene = function () {
