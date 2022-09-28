@@ -59,9 +59,9 @@ body.light {
   /* 背景色 */
   --main-color-4: #151327;
   --main-color-2: #332f45;
-  --negative-3-bg: #rgba(160, 172, 174, 0.3);
-  --negative-2-bg: rgba(160, 172, 174, 0.2);
-  --negative-1-bg: rgba(160, 172, 174, 0.1);
+  --negative-3-bg: #rgba(160, 168, 174, 0.3);
+  --negative-2-bg: rgba(160, 168, 174, 0.2);
+  --negative-1-bg: rgba(160, 168, 174, 0.1);
   --table-content-color: #f5f8f9;
   --main-color-1: #fbfdff;
   --white-30: rgba(255, 255, 255, 0.3);
@@ -129,9 +129,9 @@ body.grey {/* 颜色定义 */
   /* 背景色 */
   --main-color-4: #151327;
   --main-color-2: #332f45;
-  --negative-3-bg: #rgba(160, 172, 174, 0.3);
-  --negative-2-bg: rgba(160, 172, 174, 0.2);
-  --negative-1-bg: rgba(160, 172, 174, 0.1);
+  --negative-3-bg: #rgba(160, 168, 174, 0.3);
+  --negative-2-bg: rgba(160, 168, 174, 0.2);
+  --negative-1-bg: rgba(160, 168, 174, 0.1);
   --table-content-color: #f5f8f9;
   --main-color-1: #fbfdff;
   --white-30: rgba(255, 255, 255, 0.3);
@@ -198,9 +198,9 @@ body.black {/* 颜色定义 */
   /* 背景色 */
   --main-color-4: #151327;
   --main-color-2: #332f45;
-  --negative-3-bg: #rgba(160, 172, 174, 0.3);
-  --negative-2-bg: rgba(160, 172, 174, 0.2);
-  --negative-1-bg: rgba(160, 172, 174, 0.1);
+  --negative-3-bg: #rgba(160, 168, 174, 0.3);
+  --negative-2-bg: rgba(160, 168, 174, 0.2);
+  --negative-1-bg: rgba(160, 168, 174, 0.1);
   --table-content-color: #f5f8f9;
   --main-color-1: #fbfdff;
   --white-30: rgba(255, 255, 255, 0.3);
