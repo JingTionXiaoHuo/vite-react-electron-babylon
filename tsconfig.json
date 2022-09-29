@@ -55,7 +55,7 @@
     // 将class声明中的字段语义从[Set]变更到[Define]
     "useDefineForClassFields": true,
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "main.tsx"],
   "exclude": [
     "build/**/*",
     "dist/**/*",

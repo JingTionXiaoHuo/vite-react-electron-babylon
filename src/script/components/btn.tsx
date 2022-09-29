@@ -1,5 +1,3 @@
-import React from "react";
-
 type StateType = {
 };
 
@@ -13,14 +11,11 @@ interface Menu {
   props: propType
 }
 
-class Menu extends React.Component {
-  render() {
-    return (
-      <div className="GS_btn" onClick={this.props.onClick}>
-        {this.props.content}
-      </div>
-    );
-  }
-}
+export default function Menu(props: propType) {
 
-export default Menu;
+  return (
+    <div className="GS_btn" onClick={props.onClick}>
+      {props.content}
+    </div>
+  );
+}

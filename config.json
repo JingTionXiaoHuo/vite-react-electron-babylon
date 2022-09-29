@@ -1,0 +1,9 @@
+{
+  "page": {
+    "Babylon": true,
+    "Banner": false,
+    "Version_info": true,
+    "Btn": true
+  },
+  "preference": {}
+}

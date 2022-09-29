@@ -26,7 +26,7 @@ function createMainWindow() {
     maximizable: false,
     webPreferences: {
       // webSecurity: false,
-      preload: path.join(__dirname, "./src/preload.js"),
+      preload: path.join(__dirname, "./src/electron-preload.js"),
       accessibleTitle: "KiyaのTool",
       // contextIsolation: false,
       nodeIntegration: true,
