@@ -1,50 +1,48 @@
-import React from "react";
-
 //ts 中类
 
-class Person {
-    name: string;//实例属性
-    age: number;//实例属性
-    //构造函数
-    constructor(name: string, age: number) {
-        this.name = name;
-        this.age = age;
-    }
-    //实例方法
-    sayHi() {
-        return "hi, my name is:" + this.name + ",my age is:" + this.age;
-    }
-    //静态方法
-    static hello() {
-        console.log("hello!!");
-    }
-    //静态属性
-    static PI: number = Math.PI;
-    //静态方法中可以返回静态属性，，静态成员只能使用类名.静态成员的方式进行访问。
-    static area(r: number) {
-        return Person.PI * r * r;
-    }
-}
+// class Person {
+//     name: string;//实例属性
+//     age: number;//实例属性
+//     //构造函数
+//     constructor(name: string, age: number) {
+//         this.name = name;
+//         this.age = age;
+//     }
+//     //实例方法
+//     sayHi() {
+//         return "hi, my name is:" + this.name + ",my age is:" + this.age;
+//     }
+//     //静态方法
+//     static hello() {
+//         console.log("hello!!");
+//     }
+//     //静态属性
+//     static PI: number = Math.PI;
+//     //静态方法中可以返回静态属性，，静态成员只能使用类名.静态成员的方式进行访问。
+//     static area(r: number) {
+//         return Person.PI * r * r;
+//     }
+// }
 
-class Student extends Person {
-    score: number;//学生成绩，新的成员属性
+// class Student extends Person {
+//     score: number;//学生成绩，新的成员属性
 
-    constructor(name: string, age: number, score: number) {
-        //子类调用父类构造函数进行初始化
-        super(name, age);
-        this.score = score;
-    }
+//     constructor(name: string, age: number, score: number) {
+//         //子类调用父类构造函数进行初始化
+//         super(name, age);
+//         this.score = score;
+//     }
 
-    //子类重写(覆盖)父类中的方法
-    sayHi() {
-        return "hi,我的姓名是:" + this.name + ",我年龄是:" + this.age + ",我的成绩是:" + this.score;
-    }
+//     //子类重写(覆盖)父类中的方法
+//     sayHi() {
+//         return "hi,我的姓名是:" + this.name + ",我年龄是:" + this.age + ",我的成绩是:" + this.score;
+//     }
 
-    //子类中扩展的方法
-    study() {
-        return this.name + "在学习";
-    }
-}
+//     //子类中扩展的方法
+//     study() {
+//         return this.name + "在学习";
+//     }
+// }
 
 class testClass {
     name: string = 'test';

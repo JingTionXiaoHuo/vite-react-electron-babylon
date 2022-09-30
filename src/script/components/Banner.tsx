@@ -2,10 +2,10 @@ import { useEffect } from 'react';
 import * as BABYLON from 'babylonjs';
 import 'babylonjs-loaders';
 import { MeshWriter } from "meshwriter";
-import { PerlinNoise } from "./perlin";
+// import { PerlinNoise } from "./perlin";
 
-const imgSize = [[1920, 650], [660, 330], [1110, 450]];
-const imgName = ['woniuxy.cn.pc', 'woniuxy.cn.mo', 'woniuxy.com.pc'];
+// const imgSize = [[1920, 650], [660, 330], [1110, 450]];
+// const imgName = ['woniuxy.cn.pc', 'woniuxy.cn.mo', 'woniuxy.com.pc'];
 const campus_array = [
 	['成都', '09·22'],
 	['天府', '10·10'],
@@ -64,7 +64,7 @@ function BannerBox() {
 	function createBabylonScene() {
 		const canvas = document.getElementById("BannerCanvas")!; // 得到canvas对象的引用
 		const start_time = new Date().getTime();
-		let perlinNosie = new PerlinNoise();
+		// let perlinNosie = new PerlinNoise();
 
 		if (isCanvas(canvas)) {
 			const engine = new BABYLON.Engine(canvas, true); // 初始化 BABYLON 3D engine

@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import * as BABYLON from 'babylonjs';
 import { FloatArray } from 'babylonjs';
 import { PerlinNoise } from "./perlin";
-import start_addr from "/img/babylonImg/jianbian.jpg"
+// import start_addr from "/img/babylonImg/jianbian.jpg"
 
 function BabylonBox() {
 	function isCanvas(obj: HTMLCanvasElement | HTMLElement): obj is HTMLCanvasElement {

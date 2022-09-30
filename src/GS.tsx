@@ -3,9 +3,8 @@ import worklet from "./script/paintWorklet";
 import Btn from "./script/components/btn";
 import BabylonBox from "./script/components/babylon";
 import Version_info from "./script/components/version_info";
-import Banner from "./script/components/banner";
-import Attr from "./script/attr";
-import { default as wasm, hcl_init, greet } from "../public/pkg/kiya_tool.js";
+// import Attr from "./script/attr";
+import { default as wasm, greet } from "../public/pkg/kiya_tool.js";
 
 worklet();//导入自定义paintAPI
 
@@ -60,7 +59,7 @@ export default function GS(props: propType) {
     window.dispatchEvent(reactDomRender);
 
     // 感知json内容打印
-    Attr();
+    // Attr();
 
     // 添加全局监听事件
     window.addEventListener("keydown", (e: KeyboardEvent) => {

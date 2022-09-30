@@ -1,18 +1,5 @@
 // 向指定的dom中插入环境信息
 
-// 由于ReactDom.createRoot().render()方法异步执行，此方法执行时dom为完全生成，达不到预期值，所以已弃用
-// window.addEventListener('DOMContentLoaded', () => {
-// 	console.log('DOMContentLoaded');
-// 	const replaceText = (selector, text) => {
-// 		const element = document.getElementById(selector);
-// 		console.log(element);
-// 		if (element) element.innerText = text
-// 	}
-// 	for (const type of ['chrome', 'node', 'electron']) {
-// 		replaceText(`${type}-version`, process.versions[type]);
-// 	}
-// })
-
 window.addEventListener("ReactDomRender", () => {
   console.log("监听到ReactDomRender,GS组件加载完毕");
   const replaceText = (selector, text) => {
@@ -22,14 +9,13 @@ window.addEventListener("ReactDomRender", () => {
   for (const type of ["chrome", "node", "electron"]) {
     replaceText(`${type}-version`, process.versions[type]);
   }
-  // 添加与electron主进程通信的ipc模块
 
+  // 添加与electron主进程通信的ipc模块
   try {
     let ipcRenderer = require("electron").ipcRenderer;
-
+    
     //点击穿透
-    let root = document.getElementById('root');
-
+    let root = document.getElementById("root");
     root.onmouseenter = function () {
       ipcRenderer.send("huanyuan", "huanyuan");
     };
