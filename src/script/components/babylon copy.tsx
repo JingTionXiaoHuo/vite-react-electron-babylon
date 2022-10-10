@@ -6,36 +6,63 @@ import 'https://cdn.babylonjs.com/cannon.js';
 // import start_addr from "/img/babylonImg/jianbian.jpg"
 
 function BabylonBox() {
-	function isCanvas(obj: HTMLCanvasElement | HTMLElement | null): obj is HTMLCanvasElement {
-		if (obj !== null) {
-			return obj.tagName === 'CANVAS';
-		} else {
-			return false
-		}
+	function isCanvas(obj: HTMLCanvasElement | HTMLElement): obj is HTMLCanvasElement {
+		return obj.tagName === 'CANVAS';
 	}
 
 	useEffect(() => {
-		const canvas = document.getElementById('babylonCanvas');
+		const canvas = document.getElementById('babylonCanvas')!;
 
-		if (isCanvas(canvas)) {
-			canvas.width = canvas.parentElement!.clientWidth;
-			canvas.height = canvas.parentElement!.clientHeight;
-
-			window.addEventListener("resize", () => {
+		function canvasResize() {
+			if (isCanvas(canvas)) {
 				canvas.width = canvas.parentElement!.clientWidth;
 				canvas.height = canvas.parentElement!.clientHeight;
-			});
-
-			createBabylonScene();
-		} else {
-			console.log("cannot find canvas~")
+			}
 		}
+		window.addEventListener("resize", canvasResize);
+
+		// 初始化canvas标签大小
+		canvasResize();
+
+		function playOrHidden(event: CustomEvent) {
+			if (event.detail === 'Play') {
+				//绘制canvas内容
+				createBabylonScene();
+				window.removeEventListener("playOrHidden", playOrHidden as EventListener)
+			}
+		}
+
+		window.addEventListener("playOrHidden", playOrHidden as EventListener)
 	}, []);
 
 
 	function createBabylonScene() {
 		const canvas = document.getElementById("babylonCanvas")!; // 得到canvas对象的引用
 		const start_time = new Date().getTime();//记录场景开始时间
+
+		class Ball {
+			name: string;//实例属性
+			age: number;//实例属性
+			//构造函数
+			constructor(name: string, age: number) {
+				this.name = name;
+				this.age = age;
+			}
+			//实例方法
+			create() {
+				eval("const " + this.name + " =")
+			}
+			//静态方法
+			static hello() {
+				console.log("hello!!");
+			}
+			//静态属性
+			static PI: number = Math.PI;
+			//静态方法中可以返回静态属性，，静态成员只能使用类名.静态成员的方式进行访问。
+			static area(r: number) {
+				return Ball.PI * r * r;
+			}
+		}
 
 		if (isCanvas(canvas)) {
 			const engine = new BABYLON.Engine(canvas, true); // 初始化 BABYLON 3D engine
@@ -46,41 +73,58 @@ function BabylonBox() {
 				let perlinNosie = new PerlinNoise();
 				let scene = new BABYLON.Scene(engine);
 				scene.clearColor = new BABYLON.Color4(0, 0, 0, 0);
+				// scene.clearColor = new BABYLON.Color4(0.19607843, 0.80392157, 0.63921569, 1);
 				scene.enablePhysics();
-
-				class Ball extends BABYLON.Mesh {
-					// constructor(name: string, scene?: BABYLON.Nullable<BABYLON.Scene> | undefined, parent?: BABYLON.Nullable<BABYLON.Node> | undefined, source?: BABYLON.Nullable<BABYLON.Mesh> | undefined, doNotCloneChildren?: boolean | undefined, clonePhysicsImpostor?: boolean | undefined) {
-					// 	super(name, scene, parent, source, doNotCloneChildren, clonePhysicsImpostor);
-					// }
-					static smell_outline:BABYLON.Mesh = BABYLON.MeshBuilder.CreateGeodesic(this.name + 'smell_outline', { m: 24, n: 2, size: 2, updatable: true });
-				}
 
 				// 摄像机
 				let camera = new BABYLON.ArcRotateCamera("Camera", -Math.PI / 4, Math.PI / 2.5, 10, BABYLON.Vector3.Zero(), scene);
 				camera.attachControl(canvas, true);
 				camera.minZ = 0.1;
 
-				// 灯光
-				const light1 = new BABYLON.PointLight("light1", new BABYLON.Vector3(0, 10, 0), scene);
+				//环境
+				const defaultEnvironment = scene.createDefaultEnvironment({
+					createSkybox: false,
+					groundShadowLevel: 0.2,
+					createGround: false,
+				});
 
-				// physics scene
-				var ground = BABYLON.MeshBuilder.CreateSphere("Ground", { segments: 100, diameterX: 1 }, scene);
-				ground.scaling = new BABYLON.Vector3(10, 1, 10);
-				ground.position.y = -2.0;
-				ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, friction: 0.5, restitution: 0.7 }, scene);
+				if (defaultEnvironment && defaultEnvironment.ground) {
+					defaultEnvironment.ground.receiveShadows = true;
+					defaultEnvironment.ground.position.y = -4;
+					defaultEnvironment.setMainColor(new BABYLON.Color3(3, 3, 3));
+				}
+
+				// 灯光
+				const light1 = new BABYLON.DirectionalLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
+				const light2 = new BABYLON.DirectionalLight("light2", new BABYLON.Vector3(0, -1, 0), scene);
+				light2.position = new BABYLON.Vector3(0, 1, 0)
 
 				// 二十面体---------------------
 				const icosahedron = BABYLON.MeshBuilder.CreateGeodesic("icosahedron1", { m: 24, n: 2, size: 2, updatable: true });
 
-				// //阴影---------------------
-				const generator = new BABYLON.ShadowGenerator(1024, light1);
-				generator.usePoissonSampling = true;
-				generator.bias = 0.000001;
-				generator.blurScale = 1;
-				generator.transparencyShadow = true;
-				generator.darkness = 0.6;
+				//默认材质----------------------
+				// var normalMaterial = new BABYLON.StandardMaterial("normalMat", scene);
+				// icosahedron.material = normalMaterial;
 
-				generator.addShadowCaster(icosahedron);
+				//玻璃材质----------------------
+				var mat0 = new BABYLON.PBRMaterial("mat0", scene);
+				mat0.metallic = 0.0;
+				mat0.roughness = 0.12;
+				mat0.useRoughnessFromMetallicTextureAlpha = false;
+				mat0.useRoughnessFromMetallicTextureGreen = true;
+				mat0.useMetallnessFromMetallicTextureBlue = true;
+				mat0.subSurface.isRefractionEnabled = true;
+				mat0.subSurface.maximumThickness = 2.0;
+				mat0.subSurface.tintColor = new BABYLON.Color3(1, 1, 0.941).toLinearSpace();
+				mat0.subSurface.refractionIntensity = 1.0;
+				mat0.subSurface.indexOfRefraction = 2.42;
+				mat0.subSurface.isTranslucencyEnabled = true;
+				icosahedron.material = mat0;
+
+				// //阴影---------------------
+				const generator = new BABYLON.ShadowGenerator(512, light1);
+				generator.useBlurExponentialShadowMap = true;
+				generator.blurKernel = 32;
 
 				let positions = icosahedron.getVerticesData(BABYLON.VertexBuffer.PositionKind);//顶点位置引用
 
@@ -119,7 +163,8 @@ function BabylonBox() {
 				//将场景内网格添加到阴影渲染队列
 				for (let i = 0; i < scene.meshes.length; i++) {
 					// console.log(i, scene.meshes[i].name);
-					scene.meshes[i].receiveShadows = true;
+					generator.addShadowCaster(scene.meshes[i]);
+					// scene.meshes[i].receiveShadows = true;
 				}
 
 				return scene;
@@ -149,6 +194,7 @@ function BabylonBox() {
 			</canvas>
 			<div className="pfs-info">FPS: <span id="FPS"></span></div>
 		</div>
+
 	);
 }
 

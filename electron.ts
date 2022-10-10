@@ -60,14 +60,14 @@ function createMainWindow() {
 
   ipcMain.on("chuantou", function () {
     console.log("chuantou");
-    // mainWindow.setIgnoreMouseEvents(true, {
-    //   forward: true,
-    // });
+    mainWindow.setIgnoreMouseEvents(true, {
+      forward: true,
+    });
   });
 
   ipcMain.on("huanyuan", function () {
     console.log("huanyuan");
-    // mainWindow.setIgnoreMouseEvents(false);
+    mainWindow.setIgnoreMouseEvents(false);
   });
 }
 app.whenReady().then(() => {

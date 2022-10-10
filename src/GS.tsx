@@ -4,7 +4,10 @@ import Btn from "./script/components/btn";
 import BabylonBox from "./script/components/babylon";
 import Version_info from "./script/components/version_info";
 // import Attr from "./script/attr";
-import { default as wasm, greet } from "../public/pkg/kiya_tool.js";
+import { default as wasm, greet } from "../pkg/kiya_tool.js";
+import main from "./main";
+// import("./main");
+
 
 worklet();//导入自定义paintAPI
 
@@ -26,20 +29,10 @@ interface GS {
 }
 
 export default function GS(props: propType) {
-
   const [ui_class, setui_class] = useState("Play");
-
-  const playOrHidden = new CustomEvent("playOrHidden", {
-    detail: ui_class,
-  });
-
-  const reactDomRender = new CustomEvent("ReactDomRender", {
-    detail: "base",
-  });
-
-  const resize = new CustomEvent("resize", {
-    detail: "change",
-  });
+  const playOrHidden = new CustomEvent("playOrHidden", { detail: ui_class, });
+  const reactDomRender = new CustomEvent("ReactDomRender", { detail: "base", });
+  const resize = new CustomEvent("resize", { detail: "change", });
 
   function class_switch() {
     if (ui_class === "Play") {
@@ -49,6 +42,7 @@ export default function GS(props: propType) {
   }
 
   useEffect(() => {
+    main();
     const root = document.getElementById('root')!;
 
     if (document.getElementById('BannerBox')) {
@@ -81,7 +75,7 @@ export default function GS(props: propType) {
 
   return (
     <div id="GS" className={'default ' + ui_class}>
-      <BabylonBox />
+      {/* <BabylonBox /> */}
       {/* <Banner /> */}
       <Version_info />
       <Btn
