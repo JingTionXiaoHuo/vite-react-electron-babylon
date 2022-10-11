@@ -75,7 +75,7 @@ export default function GS(props: propType) {
 
   return (
     <div id="GS" className={'default ' + ui_class}>
-      {/* <BabylonBox /> */}
+      <BabylonBox />
       {/* <Banner /> */}
       <Version_info />
       <Btn
