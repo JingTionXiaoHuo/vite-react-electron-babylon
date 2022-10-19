@@ -7,12 +7,15 @@
     <meta name="theme-color" content="#000000" />
     <meta name="description" content="Electron-React-App by KiaClouth" />
     <link rel="manifest" href="/src/manifest.json" />
-    <title></title>
+    <title>My Love</title>
     <!-- css -->
     <link rel="stylesheet" href="/src/css/style.css" />
   </head>
   <body class="light">
     <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <script type="module" src="/src/react-preload.tsx"></script>
+    <script>
+      window.CSS.paintWorklet.addModule("./src/paintWorklet.js")
+    </script>
   </body>
 </html>

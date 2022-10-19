@@ -1,11 +1,10 @@
-function worklet() {
-  const worklet = `
-  class SmoothCorners {
+class SmoothCorners {
   static get inputProperties() {
     return ["--smooth-corners"];
   }
 
   paint(ctx, geom, properties) {
+    // console.log(geom);
     // 将css属性中的--smooth-corners赋值给变量c
     const c = properties.get("--smooth-corners").toString();
 
@@ -69,17 +68,6 @@ function worklet() {
 }
 
 registerPaint("smooth-corners", SmoothCorners);
-  `;
-  
-  const workletBlob = URL.createObjectURL(new Blob([worklet], { type: 'application/javascript' }));
-  try {
-    window.CSS.paintWorklet.addModule(workletBlob);
-  } catch (error) {
-    console.log('CSS.paintWorklet.addModule失败')
-  }
-};
-
-export default worklet;
 
 
 // /* 

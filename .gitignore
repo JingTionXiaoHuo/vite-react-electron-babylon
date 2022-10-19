@@ -93,7 +93,11 @@ dist/
 build/
 
 #rust
-pkg/
-target/
+rust/pkg/
+rust/target/
+
+#https
 keys/
+
+#wasm
 wasm-pack.log
