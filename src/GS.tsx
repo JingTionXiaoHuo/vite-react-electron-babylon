@@ -2,14 +2,14 @@ import { useState, useEffect } from "react";
 import * as Components from "./script/components";
 
 export default function GS() {
-  const [ui_class, setui_class] = useState("Play");
-  const playOrHidden = new CustomEvent("playOrHidden", { detail: ui_class, });
+  const [uiState, setUiState] = useState("Play");
+  const playOrHidden = new CustomEvent("playOrHidden", { detail: uiState, });
   const reactDomRender = new CustomEvent("ReactDomRender", { detail: "base", });
   const resize = new CustomEvent("resize", { detail: "change", });
 
-  let class_switch = function () {
-    ui_class === "Play" && window.dispatchEvent(playOrHidden);
-    return ui_class === "Play" ? "Hidden" : "Play";
+  let classReplace = function () {
+    uiState === "Play" && window.dispatchEvent(playOrHidden);
+    return uiState === "Play" ? "Hidden" : "Play";
   }
 
   useEffect(() => {
@@ -20,18 +20,11 @@ export default function GS() {
     window.dispatchEvent(reactDomRender);
     window.dispatchEvent(resize);
 
-    // 感知json内容打印
-    // Attr();
-
     // 监听F11事件
     window.addEventListener("keydown", (e: KeyboardEvent) => {
       if (e.code == "F11") {
         e.preventDefault();
-        if (!root.classList.contains('fullScreen')) {
-          root.classList.add('fullScreen');
-        } else {
-          root.classList.remove('fullScreen');
-        }
+        !root.classList.contains('fullScreen') ? root.classList.add('fullScreen') : root.classList.remove('fullScreen');
         window.dispatchEvent(resize);
       }
     })
@@ -42,13 +35,13 @@ export default function GS() {
   }, []);
 
   return (
-    <div id="GS" className={'default ' + ui_class}>
+    <div id="GS" className={'default ' + uiState}>
       <Components.BabylonBox />
       {/* <Components.BannerBox /> */}
       <Components.VersionInfo />
       <Components.Menu
-        onClick={() => setui_class(class_switch())}
-        content={ui_class}
+        onClick={() => setUiState(classReplace())}
+        content={uiState}
       />
     </div>
   );
