@@ -3,6 +3,8 @@ import * as BABYLON from 'babylonjs';
 import { PerlinNoise, canvasResize, isCanvas } from './lib';
 
 import './lib/babylon/cannon.js';
+// import './lib/babylon/ammo.js';
+// import './lib/babylon/Oimo.js';
 export function BabylonBox() {
     useEffect(() => {
         const canvas = document.getElementById('babylonCanvas');
@@ -17,7 +19,6 @@ export function BabylonBox() {
         //组件卸载时
         return () => { };
     }, []);
-
 
     function createBabylonScene(canvas: HTMLCanvasElement) {
         const start_time = new Date().getTime();//记录场景开始时间
@@ -34,14 +35,7 @@ export function BabylonBox() {
             let perlinNosie = new PerlinNoise();
             let scene = new BABYLON.Scene(engine);
             scene.clearColor = new BABYLON.Color4(0, 0, 0, 0);
-            scene.enablePhysics();
-
-            // class Ball extends BABYLON.Mesh {
-            // 	// constructor(name: string, scene?: BABYLON.Nullable<BABYLON.Scene> | undefined, parent?: BABYLON.Nullable<BABYLON.Node> | undefined, source?: BABYLON.Nullable<BABYLON.Mesh> | undefined, doNotCloneChildren?: boolean | undefined, clonePhysicsImpostor?: boolean | undefined) {
-            // 	// 	super(name, scene, parent, source, doNotCloneChildren, clonePhysicsImpostor);
-            // 	// }
-            // 	static smell_outline:BABYLON.Mesh = BABYLON.MeshBuilder.CreateGeodesic(this.name + 'smell_outline', { m: 24, n: 2, size: 2, updatable: true });
-            // }
+            scene.enablePhysics(new BABYLON.Vector3(0, -9.8, 0), new BABYLON.CannonJSPlugin(false));
 
             // 摄像机
             let camera = new BABYLON.ArcRotateCamera("Camera", -Math.PI / 4, Math.PI / 2.5, 10, BABYLON.Vector3.Zero(), scene);
@@ -49,16 +43,22 @@ export function BabylonBox() {
             camera.minZ = 0.1;
 
             // 灯光
-            const light1 = new BABYLON.PointLight("light1", new BABYLON.Vector3(0, 10, 0), scene);
+            const light1 = new BABYLON.PointLight("light1", new BABYLON.Vector3(0, 40, 0), scene);
 
-            // physics scene
-            var ground = BABYLON.MeshBuilder.CreateSphere("Ground", { segments: 100, diameterX: 1 }, scene);
-            ground.scaling = new BABYLON.Vector3(10, 1, 10);
-            ground.position.y = -2.0;
-            ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, friction: 0.5, restitution: 0.7 }, scene);
+            // 物理地面
+            var ground = BABYLON.MeshBuilder.CreateSphere("Ground", { diameter: 2 }, scene);
+            ground.position.y = -2;
+            // ground.scaling = new BABYLON.Vector3(10, 1, 10);
+            ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 0, friction: 0, restitution: 0.6 });
+
+            // var ball = BABYLON.MeshBuilder.CreateSphere("Ground1", { diameter: 1 }, scene);
+            // ball.position.y = 10;
+            // ball.physicsImpostor = new BABYLON.PhysicsImpostor(ball, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 1, friction: 0, restitution: 0.9 });
 
             // 二十面体---------------------
-            const icosahedron = BABYLON.MeshBuilder.CreateGeodesic("icosahedron1", { m: 24, n: 2, size: 2, updatable: true });
+            const icosahedron = BABYLON.MeshBuilder.CreateGeodesic("icosahedron1", { m: 4, n: 2, size: 1.8, updatable: true });
+            icosahedron.position = new BABYLON.Vector3(0, 15, 0);
+            icosahedron.physicsImpostor = new BABYLON.PhysicsImpostor(icosahedron, BABYLON.PhysicsImpostor.MeshImpostor, { mass: 1, restitution: 0.9 });
 
             // //阴影---------------------
             const generator = new BABYLON.ShadowGenerator(1024, light1);
@@ -95,7 +95,7 @@ export function BabylonBox() {
                             (initial_vector.y * 0.3) + (a * 0.0003),
                             (initial_vector.z * 0.3)
                         );
-                        const ratio = perlin;// 为了控制顶点缩放比例对噪声值做的进一步处理:number
+                        const ratio = perlin * 1;// 为了控制顶点缩放比例对噪声值做的进一步处理:number
                         positions[i * 3] = initial_vector.x * ratio;
                         positions[i * 3 + 1] = initial_vector.y * ratio;
                         positions[i * 3 + 2] = initial_vector.z * ratio;
