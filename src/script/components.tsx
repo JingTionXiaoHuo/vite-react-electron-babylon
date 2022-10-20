@@ -49,16 +49,16 @@ export function BabylonBox() {
             var ground = BABYLON.MeshBuilder.CreateSphere("Ground", { diameter: 2 }, scene);
             ground.position.y = -2;
             // ground.scaling = new BABYLON.Vector3(10, 1, 10);
-            ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 0, friction: 0, restitution: 0.6 });
+            // ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 0, friction: 0, restitution: 0.6 });
 
             // var ball = BABYLON.MeshBuilder.CreateSphere("Ground1", { diameter: 1 }, scene);
             // ball.position.y = 10;
             // ball.physicsImpostor = new BABYLON.PhysicsImpostor(ball, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 1, friction: 0, restitution: 0.9 });
 
             // 二十面体---------------------
-            const icosahedron = BABYLON.MeshBuilder.CreateGeodesic("icosahedron1", { m: 4, n: 2, size: 1.8, updatable: true });
+            const icosahedron = BABYLON.MeshBuilder.CreateGeodesic("icosahedron1", { m: 24, n: 2, size: 1.8, updatable: true });
             icosahedron.position = new BABYLON.Vector3(0, 15, 0);
-            icosahedron.physicsImpostor = new BABYLON.PhysicsImpostor(icosahedron, BABYLON.PhysicsImpostor.MeshImpostor, { mass: 1, restitution: 0.9 });
+            // icosahedron.physicsImpostor = new BABYLON.PhysicsImpostor(icosahedron, BABYLON.PhysicsImpostor.MeshImpostor, { mass: 1, restitution: 0.9 });
 
             // //阴影---------------------
             const generator = new BABYLON.ShadowGenerator(1024, light1);
