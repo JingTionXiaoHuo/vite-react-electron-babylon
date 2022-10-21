@@ -253,8 +253,6 @@ body {
   left: 50%;
   transform: translateX( -50% );
   bottom: 10%;
-  width: fit-content;
-  height: fit-content;
   z-index: 2;
   font-size: 1.5rem;
   color:  rgba(142,211,83,1);
@@ -264,4 +262,5 @@ body {
   -webkit-mask-image: paint(smooth-corners);
   --smooth-corners: 12;
   cursor: pointer;
+  transition: all var(--time-normal);
 }

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import * as BABYLON from 'babylonjs';
-import { root,PerlinNoise, canvasResize, isCanvas } from './lib';
+import { path, root, PerlinNoise, canvasResize, isCanvas } from './lib';
 
 import './lib/babylon/cannon.js';
 // import './lib/babylon/ammo.js';
@@ -10,7 +10,7 @@ export function BabylonBox() {
         const canvas = document.getElementById('babylonCanvas');
 
         if (isCanvas(canvas)) {
-            window.addEventListener("ReactDomRender",() => canvasResize(canvas))
+            window.addEventListener("ReactDomRender", () => canvasResize(canvas))
             root.addEventListener("resize", () => canvasResize(canvas));
             createBabylonScene(canvas);
         } else {
@@ -18,12 +18,12 @@ export function BabylonBox() {
         }
 
         //组件卸载时
-        return () => { 
+        return () => {
             if (isCanvas(canvas)) {
-                window.removeEventListener("ReactDomRender",() => canvasResize(canvas))
+                window.removeEventListener("ReactDomRender", () => canvasResize(canvas))
                 root.removeEventListener("resize", () => canvasResize(canvas));
             }
-         };
+        };
     }, []);
 
     function createBabylonScene(canvas: HTMLCanvasElement) {
@@ -171,7 +171,7 @@ export function BannerBox() {
     useEffect(() => {
         const root = document.getElementById('root')!;
         const canvas = document.getElementById('BannerCanvas')!;
-        
+
         !root.classList.contains('fullScreen') ? root.classList.add('fullScreen') : root.classList.remove('fullScreen');
 
         if (isCanvas(canvas)) {
@@ -538,16 +538,26 @@ export function VersionInfo() {
         };
     }, []);
 
-    return (
-        <div id="version_info" className="info">
-            Node.js: <span id="node-version"></span>
-            <br />
-            Chromium: <span id="chrome-version"></span>
-            <br />
-            Electron: <span id="electron-version"></span>
-            <br />
-            已运行&nbsp;:&nbsp;&nbsp;{time}s
-            <br />
-        </div>
-    );
+    if (path === "browser") {
+        return (
+            <div id="version_info" className="info">
+                已运行&nbsp;:&nbsp;&nbsp;{time}s
+                <br />
+            </div>
+        );
+    } else {
+        return (
+            <div id="version_info" className="info">
+                Node.js: <span id="node-version"></span>
+                <br />
+                Chromium: <span id="chrome-version"></span>
+                <br />
+                Electron: <span id="electron-version"></span>
+                <br />
+                已运行&nbsp;:&nbsp;&nbsp;{time}s
+                <br />
+            </div>
+        );
+    }
+    
 }

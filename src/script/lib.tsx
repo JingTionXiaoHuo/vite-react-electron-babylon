@@ -1,4 +1,5 @@
 //预置对象
+export const path = this === window ? 'browser' : 'node';
 export const root = document.getElementById('root')!;
 
 //自定义resize事件
@@ -79,6 +80,75 @@ export class PerlinNoise {
 
 }
 
+export class SmoothCorners {
+    
+    static get inputProperties() {
+        return ["--smooth-corners"];
+    }
+
+    paint(ctx: PaintRenderingContext2D, geom: PaintSize, properties: StylePropertyMapReadOnly) {
+        // 将css属性中的--smooth-corners赋值给变量c
+        const c = properties.get("--smooth-corners").toString();
+
+        const n = c;
+        let m = n;
+
+        //限定区间
+        if (n > 100) m = 100;
+        if (n < 0.00000000001) m = 0.00000000001;
+
+        const w = Math.trunc(geom.width / 2);
+        const h = Math.trunc(geom.height / 2);
+
+        //   将椭圆分成4个象限的四个部分
+        const coordinate: Array<number[]> = [[], []];
+
+        //   记录x,y正方向象限的坐标值
+        for (let i = 0; i < w + 1; i++) {
+            const x = i;
+            const y =
+                Math.pow(
+                    Math.abs(Math.pow(h, m) * (1 - Math.pow(i, m) / Math.pow(w, m))),
+                    1 / m
+                ) + h;
+            coordinate[0].push(x);
+            coordinate[1].push(y);
+        }
+
+        //开始绘制
+        ctx.beginPath();
+
+        // 绘制第一象限，并镜像绘制其余三个象限
+        for (let i = 0; i < coordinate[0].length; i++) {
+            if (i == 0) {
+                ctx.moveTo(w, h);
+                ctx.lineTo(w, 2 * h);
+            } else ctx.lineTo(w + coordinate[0][i], +coordinate[1][i]);
+        }
+        for (let i = 0; i < coordinate[0].length; i++) {
+            if (i == 0) {
+                ctx.moveTo(w, h);
+                ctx.lineTo(w, 0);
+            } else ctx.lineTo(w + coordinate[0][i], -coordinate[1][i] + 2 * h);
+        }
+        for (let i = 0; i < coordinate[0].length; i++) {
+            if (i == 0) {
+                ctx.moveTo(w, h);
+                ctx.lineTo(w, 2 * h);
+            } else ctx.lineTo(w - coordinate[0][i], +coordinate[1][i]);
+        }
+        for (let i = 0; i < coordinate[0].length; i++) {
+            if (i == 0) {
+                ctx.moveTo(w, h);
+                ctx.lineTo(w, 0);
+            } else ctx.lineTo(w - coordinate[0][i], -coordinate[1][i] + 2 * h);
+        }
+
+        ctx.closePath();
+        ctx.fill();
+    }
+}
+
 //canvas大小设置
 export function canvasResize(canvas: HTMLCanvasElement, width?: number, height?: number): void {
     if (width) {
@@ -101,74 +171,3 @@ export function isCanvas(obj: HTMLCanvasElement | HTMLElement | null): obj is HT
         return false
     }
 }
-
-// class SmoothCorners {
-//     static get inputProperties() {
-//         return ["--smooth-corners"];
-//     }
-
-//     paint(ctx: PaintRenderingContext2D, geom: PaintSize, properties: StylePropertyMapReadOnly) {
-//         // 将css属性中的--smooth-corners赋值给变量c
-//         const c = properties.get("--smooth-corners").toString();
-
-//         const n = c;
-//         let m = n;
-
-//         //限定区间
-//         if (n > 100) m = 100;
-//         if (n < 0.00000000001) m = 0.00000000001;
-
-//         const w = Math.trunc(geom.width / 2);
-//         const h = Math.trunc(geom.height / 2);
-
-//         //   将椭圆分成4个象限的四个部分
-//         const coordinate: Array<number[]> = [[], []];
-
-//         //   记录x,y正方向象限的坐标值
-//         for (let i = 0; i < w + 1; i++) {
-//             const x = i;
-//             const y =
-//                 Math.pow(
-//                     Math.abs(Math.pow(h, m) * (1 - Math.pow(i, m) / Math.pow(w, m))),
-//                     1 / m
-//                 ) + h;
-//             coordinate[0].push(x);
-//             coordinate[1].push(y);
-//         }
-
-//         //开始绘制
-//         ctx.beginPath();
-
-//         // 绘制第一象限，并镜像绘制其余三个象限
-//         for (let i = 0; i < coordinate[0].length; i++) {
-//             if (i == 0) {
-//                 ctx.moveTo(w, h);
-//                 ctx.lineTo(w, 2 * h);
-//             } else ctx.lineTo(w + coordinate[0][i], +coordinate[1][i]);
-//         }
-//         for (let i = 0; i < coordinate[0].length; i++) {
-//             if (i == 0) {
-//                 ctx.moveTo(w, h);
-//                 ctx.lineTo(w, 0);
-//             } else ctx.lineTo(w + coordinate[0][i], -coordinate[1][i] + 2 * h);
-//         }
-//         for (let i = 0; i < coordinate[0].length; i++) {
-//             if (i == 0) {
-//                 ctx.moveTo(w, h);
-//                 ctx.lineTo(w, 2 * h);
-//             } else ctx.lineTo(w - coordinate[0][i], +coordinate[1][i]);
-//         }
-//         for (let i = 0; i < coordinate[0].length; i++) {
-//             if (i == 0) {
-//                 ctx.moveTo(w, h);
-//                 ctx.lineTo(w, 0);
-//             } else ctx.lineTo(w - coordinate[0][i], -coordinate[1][i] + 2 * h);
-//         }
-
-//         ctx.closePath();
-//         ctx.fill();
-//     }
-// }
-
-// registerPaint("smooth-corners", SmoothCorners);
-// PaintWorkletGlobalScope.registerPaint()
