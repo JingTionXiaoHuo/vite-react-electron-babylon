@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import * as BABYLON from 'babylonjs';
-import { PerlinNoise, canvasResize, isCanvas } from './lib';
+import { root,PerlinNoise, canvasResize, isCanvas } from './lib';
 
 import './lib/babylon/cannon.js';
 // import './lib/babylon/ammo.js';
@@ -10,14 +10,20 @@ export function BabylonBox() {
         const canvas = document.getElementById('babylonCanvas');
 
         if (isCanvas(canvas)) {
-            window.addEventListener("resize", () => canvasResize(canvas));
+            window.addEventListener("ReactDomRender",() => canvasResize(canvas))
+            root.addEventListener("resize", () => canvasResize(canvas));
             createBabylonScene(canvas);
         } else {
             console.log("cannot find canvas")
         }
 
         //组件卸载时
-        return () => { };
+        return () => { 
+            if (isCanvas(canvas)) {
+                window.removeEventListener("ReactDomRender",() => canvasResize(canvas))
+                root.removeEventListener("resize", () => canvasResize(canvas));
+            }
+         };
     }, []);
 
     function createBabylonScene(canvas: HTMLCanvasElement) {
@@ -131,6 +137,7 @@ export function BabylonBox() {
     );
 }
 
+import 'babylonjs-loaders';
 import { MeshWriter } from "meshwriter";
 export function BannerBox() {
 
@@ -162,7 +169,10 @@ export function BannerBox() {
     }
 
     useEffect(() => {
+        const root = document.getElementById('root')!;
         const canvas = document.getElementById('BannerCanvas')!;
+        
+        !root.classList.contains('fullScreen') ? root.classList.add('fullScreen') : root.classList.remove('fullScreen');
 
         if (isCanvas(canvas)) {
             canvasResize(canvas, 1920, 650);
@@ -207,7 +217,7 @@ export function BannerBox() {
 
             /******* 定义场景函数 ******/
             let createScene = function () {
-
+                let perlinNosie = new PerlinNoise();
                 let scene = new BABYLON.Scene(engine);
 
                 // 摄像机
@@ -271,7 +281,7 @@ export function BannerBox() {
                             shuidi_array[a].id = 'shuidi' + a;
 
                             //水滴位置、旋转、缩放效果应用
-                            shuidi_array[a].rotationQuaternion = null;//旋转四元数初始化
+                            // shuidi_array[a].rotationQuaternion = null;//旋转四元数初始化
                             shuidi_array[a].rotation = new BABYLON.Vector3(0, 0, 0);
                             shuidi_array[a].position = shuidi_position;
                             shuidi_array[a].scaling = shuidi_scaling;
@@ -297,7 +307,6 @@ export function BannerBox() {
                             const text_mesh = textMesh.getMesh();
                             text_mesh.name = 'text_mesh';
                             text_mesh.id = 'text_mesh' + a;
-                            console.log(text_mesh.material)
 
                             text_mesh.addRotation(Math.PI * 3 / 2, Math.PI * 2 / 2, Math.PI * 0 / 2);
 
@@ -315,15 +324,15 @@ export function BannerBox() {
                             text_mesh.locallyTranslate(new BABYLON.Vector3(-0.5, -0.93, -0.37));
 
                             // 测试阴影消失距离的柏林噪声
-                            // setInterval(() => {
-                            // 	const a = new Date().getTime() - start_time;
-                            // 	const perlin = perlinNosie.noise(//perlin值只与当前循环操作的顶点的位置信息相关
-                            // 		(text_mesh.position.x * 0.3) + (a * 0.0002),
-                            // 		(text_mesh.position.y * 0.3) + (a * 0.0003),
-                            // 		(text_mesh.position.z * 0.3)
-                            // 	);
-                            // 	text_mesh.locallyTranslate(new BABYLON.Vector3(0, 0.001 * (perlin - 0.5), 0));
-                            // }, 25)
+                            scene.registerBeforeRender(() => {
+                                const a = new Date().getTime() - start_time;
+                                const perlin = perlinNosie.noise(//perlin值只与当前循环操作的顶点的位置信息相关
+                                    (text_mesh.position.x * 0.3) + (a * 0.0002),
+                                    (text_mesh.position.y * 0.3) + (a * 0.0003),
+                                    (text_mesh.position.z * 0.3)
+                                );
+                                text_mesh.locallyTranslate(new BABYLON.Vector3(0, 0.001 * (perlin - 0.5), 0));
+                            });
 
                             //水滴正面法向量示意线条创建
                             // shuidi_array[a].updateFacetData();

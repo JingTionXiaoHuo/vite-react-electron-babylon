@@ -1,3 +1,9 @@
+//预置对象
+export const root = document.getElementById('root')!;
+
+//自定义resize事件
+export const resize = new CustomEvent("resize", { detail: "change", });
+
 // 柏林噪声
 export class PerlinNoise {
 

@@ -1,3 +1,4 @@
+import { root } from "./script/lib";
 import GS from "./GS";
 import ReactDOM from "react-dom/client";
 import { default as wasm, greet } from "../rust/pkg/kiya_tool.js";
@@ -17,6 +18,6 @@ if (path === 'node') {
 
 }
 
-ReactDOM.createRoot(document.getElementById("root")!).render(<GS />);
+ReactDOM.createRoot(root).render(<GS />);
 
 
