@@ -1,11 +1,8 @@
-import { root, path, SmoothCorners } from "./script/lib";
+import { root, path } from "./script/lib";
+import SmoothCorners from "./smooth-corners.worklet.js?url"
 import GS from "./GS";
 import ReactDOM from "react-dom/client";
 import { default as wasm, greet } from "../rust/pkg/kiya_tool.js";
-
-
-// registerPaint("smooth-corners", SmoothCorners);
-// PaintWorkletGlobalScope.registerPaint("smooth-corners", SmoothCorners)
 
 // 感知json内容打印
 // Attr();
@@ -21,6 +18,7 @@ if (path === 'node') {
 
 }
 
+window.CSS && CSS.paintWorklet && CSS.paintWorklet.addModule && CSS.paintWorklet.addModule(SmoothCorners);
 ReactDOM.createRoot(root).render(<GS />);
 
 
