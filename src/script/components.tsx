@@ -138,7 +138,9 @@ export function BabylonBox() {
 }
 
 import 'babylonjs-loaders';
-import { MeshWriter } from "meshwriter";
+import "../../custom-font-packages/meshwriter/dist/meshwriter.js";
+// import { MeshWriter } from "meshwriter";
+console.log(MeshWriter);
 export function BannerBox() {
 
     // const imgSize = [[1920, 650], [660, 330], [1110, 450]];
@@ -185,7 +187,6 @@ export function BannerBox() {
 
     function createBabylonScene(canvas: HTMLCanvasElement) {
         const start_time = new Date().getTime();
-        // let perlinNosie = new PerlinNoise();
 
         if (isCanvas(canvas)) {
             const engine = new BABYLON.Engine(canvas, true); // 初始化 BABYLON 3D engine
@@ -217,7 +218,7 @@ export function BannerBox() {
 
             /******* 定义场景函数 ******/
             let createScene = function () {
-                let perlinNosie = new PerlinNoise();
+                // let perlinNosie = new PerlinNoise();
                 let scene = new BABYLON.Scene(engine);
 
                 // 摄像机
@@ -290,7 +291,7 @@ export function BannerBox() {
                             const time_array = campus_array[a][1].replace(" ", ":").replace(/:/g, "·").split("·");//正则拆分时间
                             time_array[0].replace(/\b(0+)/gi, "");//正则去掉前面的0
                             const Writer = MeshWriter(scene, { scale: shuidi_scaling });
-                            const textMesh = new Writer(time_array[1], {
+                            const textMesh = new Writer(campus_array[a][0], {
                                 "font-family": "PangMenZhengDao",
                                 "letter-height": 0.2,
                                 "letter-thickness": 0.05,
@@ -324,15 +325,15 @@ export function BannerBox() {
                             text_mesh.locallyTranslate(new BABYLON.Vector3(-0.5, -0.93, -0.37));
 
                             // 测试阴影消失距离的柏林噪声
-                            scene.registerBeforeRender(() => {
-                                const a = new Date().getTime() - start_time;
-                                const perlin = perlinNosie.noise(//perlin值只与当前循环操作的顶点的位置信息相关
-                                    (text_mesh.position.x * 0.3) + (a * 0.0002),
-                                    (text_mesh.position.y * 0.3) + (a * 0.0003),
-                                    (text_mesh.position.z * 0.3)
-                                );
-                                text_mesh.locallyTranslate(new BABYLON.Vector3(0, 0.001 * (perlin - 0.5), 0));
-                            });
+                            // scene.registerBeforeRender(() => {
+                            //     const a = new Date().getTime() - start_time;
+                            //     const perlin = perlinNosie.noise(//perlin值只与当前循环操作的顶点的位置信息相关
+                            //         (text_mesh.position.x * 0.3) + (a * 0.0002),
+                            //         (text_mesh.position.y * 0.3) + (a * 0.0003),
+                            //         (text_mesh.position.z * 0.3)
+                            //     );
+                            //     text_mesh.locallyTranslate(new BABYLON.Vector3(0, 0.001 * (perlin - 0.5), 0));
+                            // });
 
                             //水滴正面法向量示意线条创建
                             // shuidi_array[a].updateFacetData();

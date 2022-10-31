@@ -4,6 +4,7 @@ import GS from "./GS";
 import ReactDOM from "react-dom/client";
 import { default as wasm, greet } from "../rust/pkg/kiya_tool.js";
 
+console.log(this === window ? 'browser' : 'node');
 // 感知json内容打印
 // Attr();
 

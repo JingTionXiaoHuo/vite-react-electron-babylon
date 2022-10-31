@@ -173,7 +173,7 @@ body {
   height: 100%;
   /* background: url(/img/page/bg/bg.svg) no-repeat center; */
   background-color: rgba(142,211,83,1);
-  /* background-color: var(--bg-okki); */
+  background-color: var(--bg-okki);
   display: flex;
 }
 
