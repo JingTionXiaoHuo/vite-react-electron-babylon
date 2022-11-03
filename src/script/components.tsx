@@ -3,8 +3,6 @@ import * as BABYLON from 'babylonjs';
 import { path, root, PerlinNoise, canvasResize, isCanvas } from './lib';
 
 import './lib/babylon/cannon.js';
-// import './lib/babylon/ammo.js';
-// import './lib/babylon/Oimo.js';
 export function BabylonBox() {
     useEffect(() => {
         const canvas = document.getElementById('babylonCanvas');
@@ -17,7 +15,6 @@ export function BabylonBox() {
             console.log("cannot find canvas")
         }
 
-        //组件卸载时
         return () => {
             if (isCanvas(canvas)) {
                 window.removeEventListener("ReactDomRender", () => canvasResize(canvas))
@@ -138,7 +135,7 @@ export function BabylonBox() {
 }
 
 import 'babylonjs-loaders';
-import "../../custom-font-packages/meshwriter/dist/meshwriter.js";
+import { MeshWriter } from  "../../custom-font-packages/meshwriter/dist/meshwriter.js";
 // import { MeshWriter } from "meshwriter";
 console.log(MeshWriter);
 export function BannerBox() {
