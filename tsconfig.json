@@ -14,7 +14,7 @@
     "allowJs": false,
 
     // 报告 javascript 文件中的错误 
-    // "checkJs": true, 
+    "checkJs": true, 
 
     // 指定 jsx 代码的生成: 'preserve', 'react-native', or 'react'
     "jsx": "react-jsx",
@@ -56,9 +56,8 @@
     "useDefineForClassFields": true,
   },
   "include": [
-    "src/**/*",
-    "main.tsx"
-  ],
+    "src/**/*"
+, "custom-font-packages/meshwriter/dist/types.d.ts", "types/meshwriter.d.ts", "custom-font-packages/meshwriter/dist/meshwriter.d.ts"  ],
   "exclude": [
     "build/**/*",
     "dist/**/*",

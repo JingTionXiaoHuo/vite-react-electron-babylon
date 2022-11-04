@@ -16,11 +16,11 @@
 
 define(
   // >>>>>  STEP 1 <<<<<
-  ['./fonts/pangmenzhengdao','./fonts/hirukopro-book','./fonts/helveticaneue-medium','./fonts/comicsans-normal','./fonts/jura-demibold','./fonts/webgl-dings'],
-  function(PMZ,HPB,HNM,CSN,JUR,WGD){
+  ['./fonts/pangmenzhengdao','./fonts/helveticaneue-medium'],
+  function(PMZ,HNM){
   // >>>>>  STEP 1 <<<<<
 
-    var   scene,FONTS,defaultColor,defaultOpac,naturalLetterHeight,curveSampleSize,Γ=Math.floor,pmz,hpb,hnm,csn,jur,wgd,debug;
+    var   scene,FONTS,defaultColor,defaultOpac,naturalLetterHeight,curveSampleSize,Γ=Math.floor,pmz,hnm,debug;
     var   b128back,b128digits;
     var   earcut                 = require("earcut");
     var   B                      = {},
@@ -28,27 +28,12 @@ define(
     prepArray();
     // >>>>>  STEP 2 <<<<<
     pmz                          = PMZ(codeList);
-    hpb                          = HPB(codeList);
     hnm                          = HNM(codeList);                         // Do not remove
-    csn                          = CSN(codeList);
-    jur                          = JUR(codeList);
-    wgd                          = WGD(codeList);
     // >>>>>  STEP 2 <<<<<
     FONTS                        = {};
     // >>>>>  STEP 3 <<<<<
     FONTS["PangMenZhengDao"]     = pmz;
-    FONTS["HirukoPro-Book"]      = hpb;
     FONTS["HelveticaNeue-Medium"]= hnm;                                   // Do not remove
-    FONTS["Helvetica"]           = hnm;
-    FONTS["Arial"]               = hnm;
-    FONTS["sans-serif"]          = hnm;
-    FONTS["Comic"]               = csn;
-    FONTS["comic"]               = csn;
-    FONTS["ComicSans"]           = csn;
-    FONTS["Jura"]                = jur;
-    FONTS["jura"]                = jur;
-    FONTS["WebGL-Dings"]         = wgd;
-    FONTS["Web-dings"]           = wgd;
     // >>>>>  STEP 3 <<<<<
     defaultColor                 = "#808080";
     defaultOpac                  = 1;

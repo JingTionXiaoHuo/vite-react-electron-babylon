@@ -135,9 +135,7 @@ export function BabylonBox() {
 }
 
 import 'babylonjs-loaders';
-import { MeshWriter } from  "../../custom-font-packages/meshwriter/dist/meshwriter.js";
-// import { MeshWriter } from "meshwriter";
-console.log(MeshWriter);
+import "../../custom-font-packages/meshwriter/dist/meshwriter.js";
 export function BannerBox() {
 
     // const imgSize = [[1920, 650], [660, 330], [1110, 450]];
