@@ -265,11 +265,17 @@ export function BannerBox() {
                             [+0.816, +0.735, +0.816, +0.816, +0.792, +0.816, +0.716, +0.701, +0.670, 10, 11, 12, 13],
                             [+0.816, +0.735, +0.816, +0.816, +0.792, +0.816, +0.716, +0.701, +0.670, 10, 11, 12, 13]
                         ]
+                        const text_scale_array = [
+                            [+0.816, +0.735, +0.816, +0.816, +0.792, +0.816, +0.716, +0.701, +0.670, 10, 11, 12, 13],
+                            [+0.816, +0.735, +0.816, +0.816, +0.792, +0.816, +0.716, +0.701, +0.670, 10, 11, 12, 13],
+                            [+0.816, +0.735, +0.816, +0.816, +0.792, +0.816, +0.716, +0.701, +0.670, 10, 11, 12, 13]
+                        ]
                         for (let a = 0; a < campus_array.length; a++) {
 
                             const shuidi_position = new BABYLON.Vector3(shuidi_position_array[0][a], shuidi_position_array[1][a], shuidi_position_array[2][a]);
                             const shuidi_rotation = new BABYLON.Vector3(Math.PI * shuidi_rotation_array[0][a], Math.PI * shuidi_rotation_array[1][a], Math.PI * shuidi_rotation_array[2][a]);
                             const shuidi_scaling = new BABYLON.Vector3(shuidi_scale_array[0][a], shuidi_scale_array[1][a], shuidi_scale_array[2][a]);
+                            const text_scaling = new BABYLON.Vector3(text_scale_array[0][a], text_scale_array[1][a], text_scale_array[2][a]);
 
                             //创建水滴
                             const shuidi_clone = shuidi.clone('shuidi', null, false)!;
@@ -304,6 +310,7 @@ export function BannerBox() {
                             text_mesh.name = 'text_mesh';
                             text_mesh.id = 'text_mesh' + a;
 
+                            // text_mesh.scaling = text_scaling;
                             text_mesh.addRotation(Math.PI * 3 / 2, Math.PI * 2 / 2, Math.PI * 0 / 2);
 
                             shuidi_array[a].addRotation(shuidi_rotation._x, shuidi_rotation._y, shuidi_rotation._z);
@@ -313,7 +320,9 @@ export function BannerBox() {
 
                             //文字居中处理
                             const sizes = text_mesh.getHierarchyBoundingVectors();
-                            const width = sizes.max.x - sizes.min.x;
+                            const width = (sizes.max.x - sizes.min.x) * text_scale_array[0][a];
+                            // const width = sizes.max.x - sizes.min.x;
+                            console.log(width);
                             text_mesh.locallyTranslate(new BABYLON.Vector3(- width / 2, -0, 0));
                             text_mesh.locallyTranslate(new BABYLON.Vector3(0.5, 1, 0.3));
                             const text_mesh_temp_position = text_mesh.position;//用于灯光定位
@@ -361,10 +370,10 @@ export function BannerBox() {
                             // localAxes_shuidi.yAxis.parent = shuidi_array[a];
                             // localAxes_shuidi.zAxis.parent = shuidi_array[a];
 
-                            // const localAxes_text = new BABYLON.AxesViewer(scene, 0.25);
-                            // localAxes_text.xAxis.parent = text_mesh;
-                            // localAxes_text.yAxis.parent = text_mesh;
-                            // localAxes_text.zAxis.parent = text_mesh;
+                            const localAxes_text = new BABYLON.AxesViewer(scene, 0.25);
+                            localAxes_text.xAxis.parent = text_mesh;
+                            localAxes_text.yAxis.parent = text_mesh;
+                            localAxes_text.zAxis.parent = text_mesh;
 
                             //阴影发生器---------------------
                             const shuidi_generator = new BABYLON.ShadowGenerator(1024, shuidi_light);
@@ -555,5 +564,5 @@ export function VersionInfo() {
             </div>
         );
     }
-    
+
 }
