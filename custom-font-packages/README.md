@@ -5,12 +5,9 @@
 > require("./index")
 
 > convertFontFile({suffix:"ttf",name:"PangMenZhengDao",compress:true})
-4.这一步会生成一个pangmenzhengdao.js在meshwriter/fonts/下
+4.这一步会在meshwriter/fonts/下生成一个pangmenzhengdao.js文件
 
 # 第二步构建meshwriter
 1.修改meshwriter/index.js的前50行内容
 2.在meshwriter下npm run build
-
-# 第三步定义d.ts
-1.在meshwriter/dist/下新建meshwriter.d.ts并写入以下内容
-export declare const MeshWriter
+3.这一步会在meshwriter/dist/下生成一个meshwriter.js文件
