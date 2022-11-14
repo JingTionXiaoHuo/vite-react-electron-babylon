@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import * as BABYLON from 'babylonjs';
-import { path, root, PerlinNoise, canvasResize, isCanvas } from './lib';
+import { path, root, PerlinNoise, canvasResize, isCanvas } from './tool';
 
 import './lib/babylon/cannon.js';
 export function BabylonBox() {
@@ -9,7 +9,7 @@ export function BabylonBox() {
 
         if (isCanvas(canvas)) {
             window.addEventListener("ReactDomRender", () => canvasResize(canvas))
-            root.addEventListener("resize", () => canvasResize(canvas));
+            window.addEventListener("resize", () => canvasResize(canvas));
             createBabylonScene(canvas);
         } else {
             console.log("cannot find canvas")
@@ -49,8 +49,8 @@ export function BabylonBox() {
             const light1 = new BABYLON.PointLight("light1", new BABYLON.Vector3(0, 40, 0), scene);
 
             // 物理地面
-            var ground = BABYLON.MeshBuilder.CreateSphere("Ground", { diameter: 2 }, scene);
-            ground.position.y = -2;
+            // var ground = BABYLON.MeshBuilder.CreateSphere("Ground", { diameter: 2 }, scene);
+            // ground.position.y = -2;
             // ground.scaling = new BABYLON.Vector3(10, 1, 10);
             // ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 0, friction: 0, restitution: 0.6 });
 
@@ -60,7 +60,7 @@ export function BabylonBox() {
 
             // 二十面体---------------------
             const icosahedron = BABYLON.MeshBuilder.CreateGeodesic("icosahedron1", { m: 24, n: 2, size: 1.8, updatable: true });
-            icosahedron.position = new BABYLON.Vector3(0, 15, 0);
+            // icosahedron.position = new BABYLON.Vector3(0, 15, 0);
             // icosahedron.physicsImpostor = new BABYLON.PhysicsImpostor(icosahedron, BABYLON.PhysicsImpostor.MeshImpostor, { mass: 1, restitution: 0.9 });
 
             // //阴影---------------------
@@ -135,6 +135,7 @@ export function BabylonBox() {
 }
 
 import 'babylonjs-loaders';
+// import { MeshWriter } from 'meshwriter';
 import "../../custom-font-packages/meshwriter/dist/meshwriter.js";
 export function BannerBox() {
 
@@ -288,7 +289,7 @@ export function BannerBox() {
                             const time_array = campusArray[a][1].replace(" ", ":").replace(/:/g, "·").split("·");//正则拆分时间
                             time_array[0].replace(/\b(0+)/gi, "");//正则去掉前面的0
                             const Writer = MeshWriter(scene, { scale: shuidiScaling });
-                            const textMesh = new Writer(time_array[1], {
+                            const textMesh = new Writer(campusArray[a][0], {
                                 "font-family": "PangMenZhengDao",
                                 "letter-height": 0.2,
                                 "letter-thickness": 0.05,

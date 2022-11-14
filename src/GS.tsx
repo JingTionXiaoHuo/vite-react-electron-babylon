@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import * as Components from "./script/components";
-import { root,resize } from "./script/lib";
+import { root, resize } from "./script/tool";
 
 export default function GS() {
   const [uiState, setUiState] = useState("Play");
 
   let classReplace = () => {
-    return uiState === "Play" ? "Hidden" : "Play";
+    return uiState === "Play"
+      ? "Hidden"
+      : "Play";
   }
 
   // 监听F11事件

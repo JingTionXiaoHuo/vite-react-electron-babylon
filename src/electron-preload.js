@@ -15,13 +15,13 @@ window.addEventListener("ReactDomRender", () => {
     let ipcRenderer = require("electron").ipcRenderer;
     
     //点击穿透
-    let root = document.getElementById("root");
-    root.onmouseenter = function () {
-      ipcRenderer.send("huanyuan", "huanyuan");
-    };
-    root.onmouseleave = function () {
-      ipcRenderer.send("chuantou", "chuantou");
-    };
+    // let root = document.getElementById("root");
+    // root.onmouseenter = function () {
+    //   ipcRenderer.send("huanyuan", "huanyuan");
+    // };
+    // root.onmouseleave = function () {
+    //   ipcRenderer.send("chuantou", "chuantou");
+    // };
 
     //最小化
     function min() {

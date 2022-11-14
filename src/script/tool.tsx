@@ -150,6 +150,7 @@ export class PerlinNoise {
 //     }
 // }
 // typeof registerPaint === 'function' && registerPaint('smooth-corners', SmoothCorners);
+/**/
 
 //canvas大小设置
 export function canvasResize(canvas: HTMLCanvasElement, width?: number, height?: number): void {

@@ -1,6 +1,6 @@
 /* 样式 */
 @import url(normalize.css);/* 规范化样式 */
-@import url(base.css);/* 项目样式库 */
+@import url(atom.css);/* 原子样式库 */
 
 /* 布局规则 */
-@import url(component_rule.css);
+@import url(layout.css);
