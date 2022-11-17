@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, MouseEventHandler } from 'react';
 import * as BABYLON from 'babylonjs';
 import { path, root, PerlinNoise, canvasResize, isCanvas } from './tool';
 
@@ -517,7 +517,7 @@ export function BannerBox() {
     );
 }
 
-interface menuProps { onClick: any; content: string; };
+interface menuProps { onClick: MouseEventHandler; content: string; };
 export function Menu(props: menuProps) {
     return (
         <div className="GS_btn" onClick={props.onClick}>
