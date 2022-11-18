@@ -32,8 +32,9 @@ export default function GS() {
   return (
     <div id="GS" className={'default ' + uiState}>
       {/* <Components.BabylonBox /> */}
-      <Components.BannerBox />
+      {/* <Components.BannerBox /> */}
       <Components.VersionInfo />
+      <Components.LoadingAnimation />
       <Components.Menu
         onClick={() => setUiState(classReplace())}
         content={uiState}

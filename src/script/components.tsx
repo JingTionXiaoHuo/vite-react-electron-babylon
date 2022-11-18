@@ -138,7 +138,6 @@ import 'babylonjs-loaders';
 // import { MeshWriter } from 'meshwriter';
 import "../../custom-font-packages/meshwriter/dist/meshwriter.js";
 export function BannerBox() {
-
     // const imgSize = [[1920, 650], [660, 330], [1110, 450]];
     // const imgName = ['woniuxy.cn.pc', 'woniuxy.cn.mo', 'woniuxy.com.pc'];
     const campusArray = [
@@ -167,6 +166,7 @@ export function BannerBox() {
     }
 
     useEffect(() => {
+
         const root = document.getElementById('root')!;
         const canvas = document.getElementById('BannerCanvas')!;
 
@@ -564,4 +564,51 @@ export function VersionInfo() {
         );
     }
 
+}
+
+export function LoadingAnimation() {
+    return (
+        <div id="loadingPage">
+            <div id="loadingBox">
+                <div className="shadow">
+                    <div className="circle"></div>
+                    <div className="circle"></div>
+                    <div className="circle"></div>
+                    <div className="circle"></div>
+                    <div className="circle"></div>
+                    <div className="circle"></div>
+                    <div className="circle"></div>
+                    <div className="circle"></div>
+                    <div className="circle"></div>
+                    <div className="circle"></div>
+                    <div className="circle"></div>
+                    <div className="circle"></div>
+                    <div className="circle"></div>
+                    <div className="circle"></div>
+                    <div className="circle"></div>
+                    <div className="circle"></div>
+                </div>
+                <div id='maskElement2'></div>
+                <div id='maskElement3'></div>
+                <div className="line">
+                    <div className="circle"></div>
+                    <div className="circle"></div>
+                    <div className="circle"></div>
+                    <div className="circle"></div>
+                    <div className="circle"></div>
+                    <div className="circle"></div>
+                    <div className="circle"></div>
+                    <div className="circle"></div>
+                    <div className="circle"></div>
+                    <div className="circle"></div>
+                    <div className="circle"></div>
+                    <div className="circle"></div>
+                    <div className="circle"></div>
+                    <div className="circle"></div>
+                    <div className="circle"></div>
+                    <div className="circle"></div>
+                </div>
+            </div>
+        </div>
+    );
 }
