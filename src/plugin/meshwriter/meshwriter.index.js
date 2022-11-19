@@ -16,7 +16,7 @@
 
 define(
   // >>>>>  STEP 1 <<<<<
-  ['./fonts/pangmenzhengdao','./fonts/helveticaneue-medium'],
+  ['./dist/pangmenzhengdao','./helveticaneue-medium'],
   function(PMZ,HNM){
   // >>>>>  STEP 1 <<<<<
 

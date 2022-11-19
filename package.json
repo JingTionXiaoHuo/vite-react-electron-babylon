@@ -10,12 +10,13 @@
   "license": "MIT",
   "private": true,
   "scripts": {
+    "initialization":"node initialization.js && webpack && vite",
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "electron-dev": "electron . dev",
     "electron": "electron .",
-    "dist": "electron-builder --win --x64"
+    "electron-build": "electron-builder --win --x64"
   },
   "browserslist": {
     "production": [
@@ -72,6 +73,9 @@
     "electron": "16.0.7",
     "electron-builder": "^22.14.5",
     "typescript": "^4.6.3",
-    "vite": "^2.9.5"
+    "vite": "^2.9.5",
+    "earcut": "^2.2.3",
+    "webpack": "^4.32.2",
+    "webpack-cli": "^3.3.12"
   }
 }

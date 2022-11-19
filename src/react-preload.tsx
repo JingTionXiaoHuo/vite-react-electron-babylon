@@ -1,5 +1,5 @@
 import { root, path } from "./script/tool";
-import SmoothCorners from "./script/lib/houdini/smooth-corners.worklet.js?url"
+import SmoothCorners from "./plugin/houdini/smooth-corners.worklet.js?url"
 import GS from "./GS";
 import ReactDOM from "react-dom/client";
 import { default as wasm, greet } from "../rust/pkg/kiya_tool.js";
