@@ -1,7 +1,7 @@
-const opentype = require("./src/plugin/meshwriter-font/opentype");
-const PiP = require("./src/plugin/meshwriter-font/pip");
-const MeshWriter = require("./src/plugin/meshwriter-font/meshwriter");
-const Glyphin = require("./src/plugin/meshwriter-font/glyphin");
+const opentype = require("./opentype");
+const PiP = require("./pip");
+const MeshWriter = require("./meshwriter");
+const Glyphin = require("./glyphin");
 const fs = require("fs");
 const root = this;
 const config = {
@@ -13,7 +13,7 @@ const config = {
     ":",";","<","=",">","?","@","[","]","^","_"," "," "
  ],
 
- //需要转化的字体文件目录:相对于initialization.js
+ //需要转化的字体文件目录
  relPathFrom: "./public/font/",
   
  //导出资源目录

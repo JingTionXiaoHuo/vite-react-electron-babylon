@@ -10,7 +10,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "initialization":"node initialization.js && webpack && vite",
+    "initialization":"set NODE_OPTIONS=--openssl-legacy-provider & node ./src/plugin/meshwriter-font/meshwriter-font.index.js && webpack && vite",
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
