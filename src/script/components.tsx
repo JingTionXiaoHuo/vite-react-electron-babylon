@@ -2,7 +2,7 @@ import { useState, useEffect, MouseEventHandler } from 'react';
 import * as BABYLON from 'babylonjs';
 import { path, root, PerlinNoise, canvasResize, isCanvas } from './tool';
 
-import '../plugin/babylon/cannon.js';
+import './plugin/babylon/cannon.js';
 export function BabylonBox() {
     useEffect(() => {
         const canvas = document.getElementById('babylonCanvas');
@@ -135,7 +135,7 @@ export function BabylonBox() {
 }
 
 import 'babylonjs-loaders';
-import "../plugin/meshwriter/dist/meshwriter.js";
+import MeshWriter from "./plugin/meshwriter/meshwriter.ES.js";
 export function BannerBox() {
     // const imgSize = [[1920, 650], [660, 330], [1110, 450]];
     // const imgName = ['woniuxy.cn.pc', 'woniuxy.cn.mo', 'woniuxy.com.pc'];

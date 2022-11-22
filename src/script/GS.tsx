@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import * as Components from "./script/components";
-import { root, resize } from "./script/tool";
+import * as Components from "./components";
+import { root, resize } from "./tool";
 
 export default function GS() {
   const [uiState, setUiState] = useState("Play");
@@ -32,9 +32,9 @@ export default function GS() {
   return (
     <div id="GS" className={'default ' + uiState}>
       {/* <Components.BabylonBox /> */}
-      {/* <Components.BannerBox /> */}
+      <Components.BannerBox />
       <Components.VersionInfo />
-      <Components.LoadingAnimation />
+      {/* <Components.LoadingAnimation /> */}
       <Components.Menu
         onClick={() => setUiState(classReplace())}
         content={uiState}

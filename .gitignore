@@ -93,8 +93,8 @@ dist/
 build/
 
 #rust
-rust/pkg/
-rust/target/
+pkg/
+target/
 
 #https
 keys/

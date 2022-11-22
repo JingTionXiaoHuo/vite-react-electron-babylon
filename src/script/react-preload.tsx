@@ -1,8 +1,8 @@
-import { root, path } from "./script/tool";
+import { root, path } from "./tool";
 import SmoothCorners from "./plugin/houdini/smooth-corners.worklet.js?url"
 import GS from "./GS";
 import ReactDOM from "react-dom/client";
-import { default as wasm, greet } from "../rust/pkg/kiya_tool.js";
+import { default as wasm, greet } from "../../pkg/kiya_tool.js";
 
 console.log(this === window ? 'browser' : 'node');
 // 感知json内容打印
